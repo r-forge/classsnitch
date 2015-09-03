@@ -10,7 +10,7 @@
   ..$ : chr [1:110] "V3" "V4" "V5" "V6" ...
 }}
 \usage{
-data("shape_ex")
+shape_ex
 }
 \description{
 Example SHAPE traces from 16SFWJ_1M7_0001 Mutate and Map experiment in the RNA Mapping Database.

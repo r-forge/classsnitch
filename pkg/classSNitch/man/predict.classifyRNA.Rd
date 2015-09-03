@@ -5,7 +5,7 @@
 \alias{predict.classifyRNA}
 \title{predict.classifyRNA}
 \usage{
-predict(object, sample, type="response")
+predict(object, sample=NULL)
 }
 \arguments{
 \item{object}{A classifyRNA object (see classifyRNA function).}
@@ -15,7 +15,12 @@ predict(object, sample, type="response")
 \item{type}{A string indicating what type of random forest data to return ("response", "vote", "prob"). Default is "response".}
 }
 \value{
-A numeric matrix of "response", "vote" or "prob" predictions.
+A list of "response", "vote" or "prob" predictions.
+\describe{
+ \item{"response"}{ Predicted classes (classes with majority vote)}
+ \item{"vote"}{ Vote count fraction (one column for each class and one row for each input)}
+ \item{"class"}{ Class probabilities (one column for each class and one row for each input)}
+}
 }
 \description{
 A function to classify rna structure change
@@ -24,14 +29,6 @@ A function to classify rna structure change
 This function predicts RNA structure change in SHAPE data
 
 This function predicts RNA structure change in SHAPE data using a random forest classifier.
-}
-\note{
-Options for type:
-\itemize{
- \item{"response"}{ Predicted classes (classes with majority vote)}
- \item{"vote"}{ Vote count fraction (one column for each class and one row for each input)}
- \item{"class"}{ Class probabilities (one column for each class and one row for each input)}
-}
 }
 \examples{
 #input data

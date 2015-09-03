@@ -5,13 +5,12 @@
 #' @docType package
 #' @name structChangeRNA
 #' @author Chanin Tolson
+#' @import gplots
+#' @import ROCR
 #' @references A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R News 2(3), 18--22 (randomForest package) \cr\cr
 #' \href{http://rmdb.stanford.edu/}{RNA Mapping Database}
 #' @seealso  \code{\link{getChangeParams}} \code{\link{classifyRNA}} \code{\link{getExampleData}}
-#' @examples require("gplots")
-#' require("ROCR")
-#'  
-#' #get change parameters
+#' @examples #get change parameters
 #' data("shape_ex")
 #' sample_shape = shape_ex
 #' sample = getChangeParams(sample_shape[2:nrow(samp),], base=sample_shape[1,], trim=5) 

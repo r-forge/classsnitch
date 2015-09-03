@@ -4,7 +4,6 @@
 #'
 #' @docType data
 #'
-#' @usage data("shape_ex")
 #'
 #' @keywords datasets
 #'

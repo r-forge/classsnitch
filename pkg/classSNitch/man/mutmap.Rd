@@ -16,7 +16,7 @@
  $ pattern.change  : num  0.861 0.929 0.912 0.922 0.904 ...
 }}
 \usage{
-data("mutmap")
+mutmap
 }
 \description{
 Example dataset with the calculated magnitude and pattern change for a set of RNAs. SHAPE traces from the RNA Mapping Database. Parameters calculated using getChangeParameters function. Consensus classification determined using crowd-sourced manual classification.

@@ -4,7 +4,6 @@
 #'
 #' @docType data
 #'
-#' @usage data("mutmap")
 #'
 #' @keywords datasets
 #'

@@ -66,8 +66,7 @@ classifyRNA = function(data=NULL, classes=2){
   
   #set optional paramater data
   if(missing(data)){
-    data("mutmap")
-    data = mutmap
+    data = classify_default
     responses = data[,classes]
     input = data[,8:9]
   } else {

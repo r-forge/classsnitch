@@ -4,7 +4,6 @@
 #'
 #' @docType data
 #'
-#' @usage data("magpat_ex")
 #'
 #' @keywords datasets
 #'

@@ -6,29 +6,33 @@
 \alias{structChangeRNA-package}
 \title{Package for the autonomous classification of RNA structure change}
 \description{
-Mutations in RNA will create a riboSNitch, if important structural elements are disrupted. Recent ultra-high throughput techniques, such as SHAPE-MaP and PARS, enable the collection of structural RNA information on a genome-wide scale. With the ability to gather genome-wide structural information on RNA, it is important to accurately classify these structural data in order to identify those structural changes that result in a phenotypic outcome. We have developed an automated approach to classify structure change in SHAPE data. This method utilizes random forest classification on a set of pattern and magnitude parameters from the “mutate and map” SHAPE data set (or another user specified data set) to build a classifier. The classifier is then used to identify structure change in other SHAPE traces. Enabling scientists to identify structure change may help guide experiments that examine RNA structure and its role in biological processes.
+Mutations in RNA will create a riboSNitch, if important structural elements are disrupted. Recent ultra-high throughput techniques, such as SHAPE-MaP and PARS, enable the collection of structural RNA information on a genome-wide scale. With the ability to gather genome-wide structural information on RNA, it is important to accurately classify these structural data in order to identify those structural changes that result in a phenotypic outcome. We have developed an automated approach to classify structure change in SHAPE data. This method utilizes random forest classification on a set of pattern and magnitude parameters from the mutate-and-map SHAPE data set (or another user specified data set) to build a classifier. The classifier is then used to identify structure change in other SHAPE traces. Enabling scientists to identify structure change may help guide experiments that examine RNA structure and its role in biological processes.
 }
 \examples{
 require("gplots")
 require("ROCR")
 
 #get change parameters
-sample_shape = getExampleData("shape_ex")
+data("shape_ex")
+sample_shape = shape_ex
 sample = getChangeParams(sample_shape[2:nrow(samp),], base=sample_shape[1,], trim=5)
 
 #predict change
-sample_class = getExampleData("magpat_ex")
+data("magpat_ex")
+sample_class = magpat_ex
 cr = classifyRNA(sample_class, classes=2)
 cr_pred = predict(cr, sample, type="response")
 
 #plot ROC curve
 col = 2
-data = getExampleData("mutmap")
+data("mutmap")
+data = mutmap
 data = data[-which(is.na(data[,col]),arr.ind=T),]
 predobj = prediction(cr$votes[,2], data[,col])
 perfobj = performance(predobj, 'tpr', 'fpr')
 aucobj = performance(predobj, 'auc')
-plot(perfobj@x.values[[1]], perfobj@y.values[[1]], lwd=2 ,type="l", xlab="Specificity", ylab="Sensitivity")
+plot(perfobj@x.values[[1]], perfobj@y.values[[1]], lwd=2,
+     type="l", xlab="Specificity", ylab="Sensitivity")
 points(c(-1,2),c(-1,2), col="red", type="l")
 text(0.8, 0.2, paste("AUC: ", format(aucobj@y.values, digits=2), sep=""), cex=1)
 }

@@ -2,6 +2,7 @@
 #'
 #' This function compares the magnitude change between samples.
 #' @title magnitudeChange
+#' @aliases magnitudeChange
 #' @keywords magnitude change RNA
 #' @usage magnitudeChange(sample, base=sample[1,], margin=1)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
@@ -21,7 +22,7 @@
 #' #get magnitude change
 #' mag = magnitudeChange(samp_nreduce)
 #'
-magnitudeChange = function(sample, base, margin){
+magnitudeChange = function(sample, base=sample[1,], margin=1){
   
   #set optional paramater margin
   if(missing(margin)) {

@@ -2,6 +2,7 @@
 #'
 #' This function performs between-sample normalization.
 #' @title normalize
+#' @aliases normalize
 #' @keywords normalize between-sample RNA
 #' @usage normalize(sample, base=sample[1,], margin=1)
 #' @param sample A numeric matrix containing values to be normalized (e.g. a set of mutant SHAPE traces).
@@ -23,7 +24,7 @@
 #' #normalize
 #' samp_norm = normalize(sample, base)
 #'
-normalize = function(sample, base, margin){
+normalize = function(sample, base=sample[1,], margin=1){
   
   #set optional paramater margin
   if(missing(margin)) {

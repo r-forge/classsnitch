@@ -4,12 +4,12 @@
 #'
 #' @docType data
 #'
-#' @usage getExampleData("shape_ex")
+#' @usage data("shape_ex")
 #'
 #' @keywords datasets
 #'
 #' @references \href{http://rmdb.stanford.edu/}{RNA Mapping Database}
 #'
 #' @examples
-#' getExampleData("shape_ex")
+#' data("shape_ex")
 "shape_ex"

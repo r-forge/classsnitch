@@ -2,6 +2,7 @@
 #'
 #' This function removes peaks that are high in both the sample and the comparison SHAPE traces.
 #' @title reduceNoise
+#' @aliases reduceNoise
 #' @keywords reduce noise trim peak filter SHAPE RNA structure 
 #' @usage reduceNoise(sample, base=sample[1,], margin=1, trim=0, high=boxplot(sample)$stats[4])
 #' @param sample A numeric matrix containing reactivity scores to be compared (e.g. a set of mutant SHAPE traces).
@@ -21,7 +22,7 @@
 #' #reduce noise
 #' samp_nreduce = reduceNoise(samp_norm, trim=1, high=4)
 #'
-reduceNoise = function(sample, base, margin, trim, high){
+reduceNoise = function(sample, base=sample[1,], margin=1, trim=0, high=boxplot(sample)$stats[4]){
   
   #set optional paramater margin
   if(missing(margin)) {

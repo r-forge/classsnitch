@@ -2,8 +2,9 @@
 #'
 #' This calculates the magnitude and pattern change in SHAPE reactivity.
 #' @title getChangeParams
+#' @aliases getChangeParams
 #' @keywords change parameters magnitude pattern RNA
-#' @usage getChangeParams(files, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, outfile=NULL, append=F)
+#' @usage getChangeParams(sample, base=NULL, margin=1, \cr trim=0, high=NULL, tol=0.1, outfile=NULL, append=F)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
 #' @param base An optional numeric vector containing the values to which the samples are to be compared (e.g. a wild type SHAPE trace). Default is the first trace in each file.
 #' @param margin An optional number indicating if the samples are organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.
@@ -19,11 +20,11 @@
 #' @author Chanin Tolson
 #' @seealso  \code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{getExampleData}}
 #' @examples #input files
-#' shape_ex = getExampleData("shape_ex")
+#' data("shape_ex")
 #' #get change parameters
-#' params = getChangeParams((sample, trim=5, outfile="out.txt")
+#' params = getChangeParams(shape_ex, trim=5, outfile="out.txt")
 #'
-getChangeParams = function(sample, base, margin, trim, high, tol, outfile, append){
+getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, outfile=NULL, append=F){
   
   #set optional paramater margin
   if(missing(margin)) {

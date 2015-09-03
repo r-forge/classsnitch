@@ -2,6 +2,7 @@
 #'
 #' This function compares the pattern change between samples.
 #' @title patternChange
+#' @aliases patternChange 
 #' @keywords pattern change RNA
 #' @usage patternChange(sample, base=sample[1,], margin=1, tol=0.1)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
@@ -22,7 +23,7 @@
 #' #get patterne change
 #' pat = patternChange(samp_nreduce)
 #'
-patternChange = function(sample, base, margin, tol){
+patternChange = function(sample, base=sample[1,], margin=1, tol=0.1){
   
   #set optional paramater margin
   if(missing(margin)) {

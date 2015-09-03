@@ -10,13 +10,13 @@
  $ pattern.change  : num  0.861 0.929 0.912 0.922 0.904 ...
 }}
 \usage{
-getExampleData("magpat_ex")
+data("magpat_ex")
 }
 \description{
 Example dataset with the calculated magnitude and pattern change for a set of RNAs. SHAPE traces from the RNA Mapping Database. Parameters calculated using getChangeParameters function.
 }
 \examples{
-getExampleData("magpat_ex")
+data("magpat_ex")
 }
 \references{
 \href{http://rmdb.stanford.edu/}{RNA Mapping Database}

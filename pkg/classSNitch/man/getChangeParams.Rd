@@ -4,7 +4,7 @@
 \alias{getChangeParams}
 \title{getChangeParams}
 \usage{
-getChangeParams(files, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, outfile=NULL, append=F)
+getChangeParams(sample, base=NULL, margin=1, \cr trim=0, high=NULL, tol=0.1, outfile=NULL, append=F)
 }
 \arguments{
 \item{sample}{A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).}
@@ -38,9 +38,9 @@ This function normalizes and reduces the noise in the sample. The magnitude and 
 }
 \examples{
 #input files
-shape_ex = getExampleData("shape_ex")
+data("shape_ex")
 #get change parameters
-params = getChangeParams((sample, trim=5, outfile="out.txt")
+params = getChangeParams(shape_ex, trim=5, outfile="out.txt")
 }
 \author{
 Chanin Tolson

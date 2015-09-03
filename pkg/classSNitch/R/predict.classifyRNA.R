@@ -2,12 +2,14 @@
 #'
 #' This function predicts RNA structure change in SHAPE data
 #' @title predict.classifyRNA
+#' @aliases predict, predict.classifyRNA
 #' @keywords predict prediction RNA structure change
-#' @usage predict(cr, sample, type="response")
-#' @param cr A classifyRNA object (see classifyRNA function).
+#' @usage predict(object, sample, type="response")
+#' @param object A classifyRNA object (see classifyRNA function).
 #' @param sample A matrix of predictors for magnitude and pattern change (e.g. output from getChangeParams())
 #' @param type A string indicating what type of random forest data to return ("response", "vote", "prob"). Default is "response". 
 #' @export
+#' @import randomForest
 #' @details This function predicts RNA structure change in SHAPE data using a random forest classifier. 
 #' @return A numeric matrix of "response", "vote" or "prob" predictions.
 #' @note Options for type: 
@@ -20,22 +22,19 @@
 #' @references A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R News 2(3), 18--22 (randomForest package)
 #' @seealso  \code{\link{getChangeParams}} \code{\link{classifyRNA}} \code{\link{getExampleData}} 
 #' @examples #input data
-#' sample = getExampleData("magpat_ex")
+#' data("magpat_ex")
 #' #build classifier
 #' cr = classifyRNA(classes=2)
 #' #get prediction
-#' cr_pred = predict(cr, sample, type="vote")
+#' cr_pred = predict(cr, magpat_ex, type="vote")
 #'
-predict.classifyRNA = function(cr, sample, type){
+predict.classifyRNA = function(object, sample, type="response"){
   
-  #library
-  require("randomForest")
-  
-  #check paramater cr
-  if(attr(cr, "class") == "classifyRNA"){
-    rf = structure(cr, class = "randomForest")
+  #check paramater object
+  if(attr(object, "class") == "classifyRNA"){
+    rf = structure(object, class = "randomForest")
   } else {
-    stop("CR must be a classifyRNA object")
+    stop("Object must be a classifyRNA object")
   }
   
   #set optional paramater type

@@ -4,12 +4,12 @@
 #'
 #' @docType data
 #'
-#' @usage getExampleData("mutmap")
+#' @usage data("mutmap")
 #'
 #' @keywords datasets
 #'
 #' @references \href{http://rmdb.stanford.edu/}{RNA Mapping Database}
 #'
 #' @examples
-#' getExampleData("mutmap")
+#' data("mutmap")
 "mutmap"

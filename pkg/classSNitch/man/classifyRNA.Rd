@@ -18,14 +18,14 @@ A classifyRNA object, based on randomForest object (see randomForest package)
  \item{type}{One of regression, classification, or unsupervised.}
  \item{predicted}{The predicted values of the input data based on out-of-bag samples.}
  \item{importance}{A matrix with nclass + 2 columns. The first nclass columns are the class-specific measures computed as mean descrease in accuracy. The nclass + 1st column is the mean descrease in accuracy over all classes. The last column is the mean decrease in Gini index.}
- \item{importanceSD}{The “standard errors” of the permutation-based importance measure. A p by nclass + 1 matrix corresponding to the first nclass + 1 columns of the importance matrix.}
+ \item{importanceSD}{The standard errors of the permutation-based importance measure. A p by nclass + 1 matrix corresponding to the first nclass + 1 columns of the importance matrix.}
  \item{ntree}{Number of trees grown.}
  \item{mtry}{Number of predictors sampled for spliting at each node.}
  \item{forest}{A list that contains the entire forest}
  \item{err.rate}{Vector error rates of the prediction on the input data, the i-th element being the (OOB) error rate for all trees up to the i-th.}
  \item{confusion}{The confusion matrix of the prediction (based on OOB data).}
- \item{votes}{A matrix with one row for each input data point and one column for each class, giving the fraction or number of (OOB) ‘votes’ from the random forest.}
- \item{oob.times}{Number of times cases are ‘out-of-bag’ (and thus used in computing OOB error estimate)}
+ \item{votes}{A matrix with one row for each input data point and one column for each class, giving the fraction or number of (OOB) votes from the random forest.}
+ \item{oob.times}{Number of times cases are out-of-bag (and thus used in computing OOB error estimate)}
  \item{proximity}{A matrix of proximity measures among the input (based on the frequency that pairs of data points are in the same terminal nodes).}
 }
 }

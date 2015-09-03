@@ -4,12 +4,12 @@
 #'
 #' @docType data
 #'
-#' @usage getExampleData("magpat_ex")
+#' @usage data("magpat_ex")
 #'
 #' @keywords datasets
 #'
 #' @references \href{http://rmdb.stanford.edu/}{RNA Mapping Database}
 #'
 #' @examples
-#' getExampleData("magpat_ex")
+#' data("magpat_ex")
 "magpat_ex"

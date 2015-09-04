@@ -46,6 +46,7 @@ magnitudeChange = function(sample, base=sample[1,], margin=1){
   
   #calculate magnitude change
   mag = apply(sample, 1, cor, x=base, method="pearson")
+  mag = mag/sqrt(ncol(sample))
   
   #return magnitude change
   return(mag)

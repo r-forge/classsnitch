@@ -11,23 +11,24 @@
 #' @param trim An optional number indicating the number of nucleotides to be trimed from the ends. Default is 0.
 #' @param high An optional number indicating the reactivity above which reactivities are considered high. Default is third quartile of the sample in each file.
 #' @param tol An optional number indicating the tolerance for the change. Default is 0.1.
+#' @param point An optional numerical vector indicating the location of disruption (e.g. mutation point)
 #' @param outfile An optional string indicating the name of the output file. The output file will consist of two columns (magnitude change and pattern change). Default will not output a file.
 #' @param append An optional boolean to append the file if an outfile is given. Default is FALSE. 
 #' @export
-#' @details This function normalizes and reduces the noise in the sample. The magnitude and pattern change is calculated for the sample using the magnitudeChange and patternChange functions. 
+#' @details This function normalizes and reduces the noise in the sample. The magnitude, pattern and location change are calculated for the sample using the magnitudeChange, patternChange and locationChange functions. 
 #' @return 
 #' \describe{
-#'  \item{"outmat"}{A two column numeric matrix for magnitude and pattern change.} 
-#'  \item{"outfile"}{An optional output file for the table.}
+#'  \item{"outmat"}{A three column numeric matrix for magnitude, pattern and location change.} 
+#'  \item{"outfile"}{An optional output file for the matrix.}
 #' }
 #' @author Chanin Tolson
-#' @seealso  \code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{getExampleData}}
+#' @seealso  \code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{locationChange}}
 #' @examples #input files
 #' data("shape_ex")
 #' #get change parameters
 #' params = getChangeParams(shape_ex, trim=5, outfile="out.txt")
 #'
-getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, outfile=NULL, append=F){
+getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, point, outfile=NULL, append=F){
   
   #set optional paramater margin
   if(missing(margin)) {
@@ -71,6 +72,13 @@ getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0
     tol = tol
   }
   
+  #set optional paramater point
+  if(missing(point)){
+    point = rep(0, nrow(sample))
+  } else {
+    point = point
+  }
+  
   #set optional paramater append
   if(missing(append)){
     append = F
@@ -106,10 +114,13 @@ getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0
   #pattern change
   pat = patternChange(samp_qual, base, tol=tol)
   
+  #location change
+  loc = locationChange(samp_qual, point, base)
+  
   #combine parameters
-  params = cbind(mag, pat)
+  params = cbind(cbind(mag, pat), loc)
   rownames(params) = rownames(sample)
-  colnames(params) = c("magnitude change", "pattern change")
+  colnames(params) = c("magnitude change", "pattern change", "location change")
   
   #write parameter outfile
   if(missing(outfile)){

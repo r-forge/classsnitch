@@ -13,7 +13,7 @@
 #' @details The pattern for a single SHAPE reacitivity trace is the pattern of increase in reactivity or decrease in reactivity between nucleotides. If the change is less than the tolerance value, it is considered a none change. The pattern change value is the Pearson correlation coefficient between the base vector pattern and the pattern of each row (or column) in sample.  
 #' @return A numeric vector of pattern changes.
 #' @author Chanin Tolson
-#' @seealso  \code{\link{getChangeParams}} \code{\link{magnitudeChange}} 
+#' @seealso  \code{\link{getChangeParams}} \code{\link{magnitudeChange}} \code{\link{locationChange}}
 #' @examples #sample data
 #' sample = matrix(sample(1:100), ncol=10)
 #' #normalize

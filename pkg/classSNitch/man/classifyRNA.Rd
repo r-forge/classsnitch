@@ -68,7 +68,7 @@ A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R N
 \href{http://rmdb.stanford.edu/}{RNA Mapping Database}
 }
 \seealso{
-\code{\link{getChangeParams}} \code{\link{predict.classifyRNA}} \code{\link{getExampleData}}
+\code{\link{getChangeParams}} \code{\link{predict.classifyRNA}}
 }
 \keyword{RNA}
 \keyword{change}

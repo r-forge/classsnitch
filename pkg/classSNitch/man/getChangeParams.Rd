@@ -19,14 +19,16 @@ getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, outfile
 
 \item{tol}{An optional number indicating the tolerance for the change. Default is 0.1.}
 
+\item{point}{An optional numerical vector indicating the location of disruption (e.g. mutation point)}
+
 \item{outfile}{An optional string indicating the name of the output file. The output file will consist of two columns (magnitude change and pattern change). Default will not output a file.}
 
 \item{append}{An optional boolean to append the file if an outfile is given. Default is FALSE.}
 }
 \value{
 \describe{
- \item{"outmat"}{A two column numeric matrix for magnitude and pattern change.}
- \item{"outfile"}{An optional output file for the table.}
+ \item{"outmat"}{A three column numeric matrix for magnitude, pattern and location change.}
+ \item{"outfile"}{An optional output file for the matrix.}
 }
 }
 \description{
@@ -35,7 +37,7 @@ A function to get magnitude and pattern change parameters
 \details{
 This calculates the magnitude and pattern change in SHAPE reactivity.
 
-This function normalizes and reduces the noise in the sample. The magnitude and pattern change is calculated for the sample using the magnitudeChange and patternChange functions.
+This function normalizes and reduces the noise in the sample. The magnitude, pattern and location change are calculated for the sample using the magnitudeChange, patternChange and locationChange functions.
 }
 \examples{
 #input files
@@ -47,7 +49,7 @@ params = getChangeParams(shape_ex, trim=5, outfile="out.txt")
 Chanin Tolson
 }
 \seealso{
-\code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{getExampleData}}
+\code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{locationChange}}
 }
 \keyword{RNA}
 \keyword{change}

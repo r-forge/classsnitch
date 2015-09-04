@@ -18,13 +18,13 @@
 #' }
 #' @author Chanin Tolson
 #' @references A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R News 2(3), 18--22 (randomForest package)
-#' @seealso  \code{\link{getChangeParams}} \code{\link{classifyRNA}} \code{\link{getExampleData}} 
+#' @seealso  \code{\link{getChangeParams}} \code{\link{classifyRNA}}
 #' @examples #input data
 #' data("magpat_ex")
 #' #build classifier
 #' cr = classifyRNA(classes=2)
 #' #get prediction
-#' cr_pred = predict(cr, magpat_ex)
+#' cr_pred = predict(cr, magpat_ex[,2:4])
 #'
 predict.classifyRNA = function(object, ...){
   
@@ -40,7 +40,7 @@ predict.classifyRNA = function(object, ...){
   opt = list(...)
   if(length(opt)>0){
     sample = opt[[1]]
-    colnames(sample) = c("mag_corr100", "pat_corr100")
+    colnames(sample) = c("mag", "pat", "loc")
     rf_pred[[1]] = predict(rf, sample, type="response")
     rf_pred[[2]] = predict(rf, sample, type="vote", norm.votes=F)
     rf_pred[[3]] = predict(rf, sample, type="prob")

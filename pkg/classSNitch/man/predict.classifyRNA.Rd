@@ -42,7 +42,7 @@ Chanin Tolson
 A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R News 2(3), 18--22 (randomForest package)
 }
 \seealso{
-\code{\link{getChangeParams}} \code{\link{classifyRNA}} \code{\link{getExampleData}}
+\code{\link{getChangeParams}} \code{\link{classifyRNA}}
 }
 \keyword{RNA}
 \keyword{change}

@@ -44,7 +44,7 @@
 #' @author Chanin Tolson
 #' @references A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R News 2(3), 18--22 (randomForest package) \cr\cr
 #' \href{http://rmdb.stanford.edu/}{RNA Mapping Database}
-#' @seealso  \code{\link{getChangeParams}} \code{\link{predict.classifyRNA}} \code{\link{getExampleData}}
+#' @seealso  \code{\link{getChangeParams}} \code{\link{predict.classifyRNA}}
 #' @examples
 #' #build classifier
 #' rf = classifyRNA(classes=2)
@@ -68,20 +68,20 @@ classifyRNA = function(data=NULL, classes=2){
   if(missing(data)){
     data = classSNitch::classify_default
     responses = data[,classes]
-    input = data[,8:9]
+    input = data[,8:10]
   } else {
     data = data
-    if(ncol(data) != 3){
+    if(ncol(data) != 4){
       stop("Incorrect data file format.")
     }
     responses = data[,1]
-    input = data[,2:3]
+    input = data[,2:4]
   }
   
   #get parameters
   input = cbind(as.factor(responses), input)
   rownames(input) = rownames(data)
-  colnames(input) = c("class", "mag_corr100", "pat_corr100") 
+  colnames(input) = c("class", "mag", "pat", "loc") 
   input = input[-which(is.na(input[,1]),arr.ind=T),]
   
   #random forest classification

@@ -8,6 +8,7 @@
 #' @param data Optional data to build the classifier. Default is pre-loaded data.
 #' @param classes An optional number indicating which class style to use. Only used when data is not supplied. Default is 2.
 #' @export
+#' @export classify_default
 #' @import randomForest
 #' @details This function builds a random forest classifier for RNA structure change using the randomForest package.
 #' @return A classifyRNA object, based on randomForest object (see randomForest package)
@@ -66,7 +67,7 @@ classifyRNA = function(data=NULL, classes=2){
   
   #set optional paramater data
   if(missing(data)){
-    data = classify_default
+    data = classSNitch::classify_default
     responses = data[,classes]
     input = data[,8:9]
   } else {
@@ -85,7 +86,7 @@ classifyRNA = function(data=NULL, classes=2){
   input = input[-which(is.na(input[,1]),arr.ind=T),]
   
   #random forest classification
-  rf = randomForest(class~., data=input, importance=TRUE, proximity=TRUE, ntree=5000)
+  rf = randomForest(class~., data=input, importance=TRUE, proximity=TRUE, ntree=5001)
   
   #convert to a classifyRNA object
   cr = structure(rf, class = "classifyRNA")

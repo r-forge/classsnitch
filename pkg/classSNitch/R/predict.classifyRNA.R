@@ -2,12 +2,11 @@
 #'
 #' This function predicts RNA structure change in SHAPE data
 #' @title predict.classifyRNA
-#' @aliases predict, predict.classifyRNA
+#' @aliases predict.classifyRNA
 #' @keywords predict prediction RNA structure change
 #' @usage predict(object, sample=NULL)
 #' @param object A classifyRNA object (see classifyRNA function).
 #' @param sample A matrix of predictors for magnitude and pattern change (e.g. output from getChangeParams())
-#' @param type A string indicating what type of random forest data to return ("response", "vote", "prob"). Default is "response". 
 #' @export
 #' @import randomForest
 #' @details This function predicts RNA structure change in SHAPE data using a random forest classifier. 
@@ -25,7 +24,7 @@
 #' #build classifier
 #' cr = classifyRNA(classes=2)
 #' #get prediction
-#' cr_pred = predict(cr, magpat_ex, type="vote")
+#' cr_pred = predict(cr, magpat_ex)
 #'
 predict.classifyRNA = function(object, ...){
   

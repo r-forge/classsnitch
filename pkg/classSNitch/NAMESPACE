@@ -2,6 +2,7 @@
 
 S3method(predict,classifyRNA)
 export(classifyRNA)
+export(classify_default)
 export(getChangeParams)
 export(magnitudeChange)
 export(normalize)

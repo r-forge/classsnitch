@@ -22,11 +22,12 @@ getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, outfile
 \item{outfile}{An optional string indicating the name of the output file. The output file will consist of two columns (magnitude change and pattern change). Default will not output a file.}
 
 \item{append}{An optional boolean to append the file if an outfile is given. Default is FALSE.}
-
-\item{outfile}{An optional output file for the table.}
 }
 \value{
-A two column numeric matrix for magnitude and pattern change.
+\describe{
+ \item{"outmat"}{A two column numeric matrix for magnitude and pattern change.}
+ \item{"outfile"}{An optional output file for the table.}
+}
 }
 \description{
 A function to get magnitude and pattern change parameters

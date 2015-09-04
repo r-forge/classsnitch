@@ -15,8 +15,11 @@
 #' @param append An optional boolean to append the file if an outfile is given. Default is FALSE. 
 #' @export
 #' @details This function normalizes and reduces the noise in the sample. The magnitude and pattern change is calculated for the sample using the magnitudeChange and patternChange functions. 
-#' @return A two column numeric matrix for magnitude and pattern change. 
-#' @param outfile An optional output file for the table.
+#' @return 
+#' \describe{
+#'  \item{"outmat"}{A two column numeric matrix for magnitude and pattern change.} 
+#'  \item{"outfile"}{An optional output file for the table.}
+#' }
 #' @author Chanin Tolson
 #' @seealso  \code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{getExampleData}}
 #' @examples #input files

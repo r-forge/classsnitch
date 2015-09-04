@@ -8,7 +8,6 @@
 #' @param data Optional data to build the classifier. Default is pre-loaded data.
 #' @param classes An optional number indicating which class style to use. Only used when data is not supplied. Default is 2.
 #' @export
-#' @export classify_default
 #' @import randomForest
 #' @details This function builds a random forest classifier for RNA structure change using the randomForest package.
 #' @return A classifyRNA object, based on randomForest object (see randomForest package)

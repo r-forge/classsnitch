@@ -38,7 +38,7 @@ mag = magnitudeChange(samp_nreduce)
 Chanin Tolson
 }
 \seealso{
-\code{\link{getChangeParams}} \code{\link{patternChange}}
+\code{\link{getChangeParams}}
 }
 \keyword{RNA}
 \keyword{change}

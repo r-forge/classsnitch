@@ -1,20 +1,21 @@
-#' A function to get the magnitude change between samples
+#' A function to get the location change between samples
 #'
 #' This function determines 
 #' @title locationChange
 #' @aliases locationChange
 #' @keywords location change RNA
-#' @usage locationChange(sample, mut, base=sample[1,], margin=1)
+#' @usage locationChange(sample, point=rep(0,nrow(sample)), base=sample[1,], margin=1)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
-#' @param point A vector containing the location of the disruption (e.g. the mutation in an RNA)
+#' @param point An optional numeric vector containing the location of the disruption (e.g. the mutation in an RNA)
 #' @param base An optional numeric vector containing the values to which the samples are to be compared (e.g. a wildtype SHAPE trace). Default is the first trace in sample.
 #' @param margin An optional number indicating if the samples are organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.
 #' @export
 #' @import changepoint
+#' @import dtw
 #' @details This function calculates the distance of change from the disruption using changepoint analysis to determine the location of change.
 #' @return A numeric vector of location changes.
 #' @author Chanin Tolson
-#' @seealso  \code{\link{getChangeParams}} \code{\link{patternChange}} \code{\link{magnitudeChange}} 
+#' @seealso  \code{\link{getChangeParams}}
 #' @examples #sample data
 #' sample = matrix(sample(1:100), ncol=10)
 #' #normalize
@@ -46,9 +47,23 @@ locationChange = function(sample, point, base=sample[1,], margin=1){
     base = base
   }
   
+  #set optional paramater point
+  if(missing(point)){
+    point = rep(0, nrow(sample))
+  } else {
+    point = point
+  }
+  
+  #calculate timewarp change
+  timewarp = function(x, y){
+    warp = dtw(x, y)
+    
+    return(warp$index1s/warp$index2s)
+  }
+  tw = apply(sample, 1, timewarp, y=base)
+  
   #calculate change point
-  diff = abs(sample-base)
-  cp = cpt.mean(diff, method="PELT", class=T)
+  cp = sapply(tw, cpt.mean, method="PELT", class=T)
   loc = sapply(cp, cpts)
   
   #find distance from the disruption

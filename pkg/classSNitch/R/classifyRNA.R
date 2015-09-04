@@ -68,20 +68,20 @@ classifyRNA = function(data=NULL, classes=2){
   if(missing(data)){
     data = classSNitch::classify_default
     responses = data[,classes]
-    input = data[,8:10]
+    input = data[,8:11]
   } else {
     data = data
-    if(ncol(data) != 4){
+    if(ncol(data) != 5){
       stop("Incorrect data file format.")
     }
     responses = data[,1]
-    input = data[,2:4]
+    input = data[,2:5]
   }
   
   #get parameters
   input = cbind(as.factor(responses), input)
   rownames(input) = rownames(data)
-  colnames(input) = c("class", "mag", "pat", "loc") 
+  colnames(input) = c("class", "mag", "pat", "loc", "tw") 
   input = input[-which(is.na(input[,1]),arr.ind=T),]
   
   #random forest classification

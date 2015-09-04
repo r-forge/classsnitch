@@ -40,7 +40,7 @@ pat = patternChange(samp_nreduce)
 Chanin Tolson
 }
 \seealso{
-\code{\link{getChangeParams}} \code{\link{magnitudeChange}} \code{\link{locationChange}}
+\code{\link{getChangeParams}}
 }
 \keyword{RNA}
 \keyword{change}

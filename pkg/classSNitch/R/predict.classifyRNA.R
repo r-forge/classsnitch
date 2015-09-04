@@ -24,7 +24,7 @@
 #' #build classifier
 #' cr = classifyRNA(classes=2)
 #' #get prediction
-#' cr_pred = predict(cr, magpat_ex[,2:4])
+#' cr_pred = predict(cr, magpat_ex[,2:5])
 #'
 predict.classifyRNA = function(object, ...){
   
@@ -40,7 +40,7 @@ predict.classifyRNA = function(object, ...){
   opt = list(...)
   if(length(opt)>0){
     sample = opt[[1]]
-    colnames(sample) = c("mag", "pat", "loc")
+    colnames(sample) = c("mag", "pat", "loc", "tw")
     rf_pred[[1]] = predict(rf, sample, type="response")
     rf_pred[[2]] = predict(rf, sample, type="vote", norm.votes=F)
     rf_pred[[3]] = predict(rf, sample, type="prob")

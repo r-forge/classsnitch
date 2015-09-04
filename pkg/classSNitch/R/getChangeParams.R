@@ -3,8 +3,8 @@
 #' This calculates the magnitude and pattern change in SHAPE reactivity.
 #' @title getChangeParams
 #' @aliases getChangeParams
-#' @keywords change parameters magnitude pattern RNA
-#' @usage getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, outfile=NULL, append=F)
+#' @keywords change parameters RNA
+#' @usage getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, point=rep(0,nrow(sample)) outfile=NULL, append=F)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
 #' @param base An optional numeric vector containing the values to which the samples are to be compared (e.g. a wild type SHAPE trace). Default is the first trace in each file.
 #' @param margin An optional number indicating if the samples are organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.
@@ -15,14 +15,14 @@
 #' @param outfile An optional string indicating the name of the output file. The output file will consist of two columns (magnitude change and pattern change). Default will not output a file.
 #' @param append An optional boolean to append the file if an outfile is given. Default is FALSE. 
 #' @export
-#' @details This function normalizes and reduces the noise in the sample. The magnitude, pattern and location change are calculated for the sample using the magnitudeChange, patternChange and locationChange functions. 
+#' @details This function normalizes and reduces the noise in the sample. The magnitude, pattern, location and timewarp change are calculated for the sample using the magnitudeChange, patternChange, locationChange and timewarp functions. 
 #' @return 
 #' \describe{
-#'  \item{"outmat"}{A three column numeric matrix for magnitude, pattern and location change.} 
+#'  \item{"outmat"}{A three column numeric matrix for magnitude, pattern, location and timewarp change.} 
 #'  \item{"outfile"}{An optional output file for the matrix.}
 #' }
 #' @author Chanin Tolson
-#' @seealso  \code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{locationChange}}
+#' @seealso  \code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{locationChange}} \code{\link{timewarpChange}}
 #' @examples #input files
 #' data("shape_ex")
 #' #get change parameters
@@ -117,10 +117,13 @@ getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0
   #location change
   loc = locationChange(samp_qual, point, base)
   
+  #timewarp change
+  tw = timewarpChange(samp_qual, base)
+  
   #combine parameters
-  params = cbind(cbind(mag, pat), loc)
+  params = cbind(cbind(cbind(mag, pat), loc), tw)
   rownames(params) = rownames(sample)
-  colnames(params) = c("magnitude change", "pattern change", "location change")
+  colnames(params) = c("magnitude change", "pattern change", "location change",  "timewarp change")
   
   #write parameter outfile
   if(missing(outfile)){

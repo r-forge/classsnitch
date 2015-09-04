@@ -33,7 +33,7 @@ data("magpat_ex")
 #build classifier
 cr = classifyRNA(classes=2)
 #get prediction
-cr_pred = predict(cr, magpat_ex)
+cr_pred = predict(cr, magpat_ex[,2:5])
 }
 \author{
 Chanin Tolson

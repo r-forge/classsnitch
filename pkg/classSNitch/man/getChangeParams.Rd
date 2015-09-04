@@ -4,7 +4,7 @@
 \alias{getChangeParams}
 \title{getChangeParams}
 \usage{
-getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, outfile=NULL, append=F)
+getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, point=rep(0,nrow(sample)) outfile=NULL, append=F)
 }
 \arguments{
 \item{sample}{A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).}
@@ -27,7 +27,7 @@ getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, outfile
 }
 \value{
 \describe{
- \item{"outmat"}{A three column numeric matrix for magnitude, pattern and location change.}
+ \item{"outmat"}{A three column numeric matrix for magnitude, pattern, location and timewarp change.}
  \item{"outfile"}{An optional output file for the matrix.}
 }
 }
@@ -37,7 +37,7 @@ A function to get magnitude and pattern change parameters
 \details{
 This calculates the magnitude and pattern change in SHAPE reactivity.
 
-This function normalizes and reduces the noise in the sample. The magnitude, pattern and location change are calculated for the sample using the magnitudeChange, patternChange and locationChange functions.
+This function normalizes and reduces the noise in the sample. The magnitude, pattern, location and timewarp change are calculated for the sample using the magnitudeChange, patternChange, locationChange and timewarp functions.
 }
 \examples{
 #input files
@@ -49,11 +49,9 @@ params = getChangeParams(shape_ex, trim=5, outfile="out.txt")
 Chanin Tolson
 }
 \seealso{
-\code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{locationChange}}
+\code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{locationChange}} \code{\link{timewarpChange}}
 }
 \keyword{RNA}
 \keyword{change}
-\keyword{magnitude}
 \keyword{parameters}
-\keyword{pattern}
 

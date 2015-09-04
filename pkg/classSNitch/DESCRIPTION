@@ -10,4 +10,5 @@ LazyData: true
 Imports: randomForest,
     ROCR,
     gplots,
-    changepoint
+    changepoint,
+    dtw

@@ -12,7 +12,7 @@
 #' @details This function calculates the Pearson correlation coefficient between the base vector and each row (or column) in sample.
 #' @return A numeric vector of magnitude changes.
 #' @author Chanin Tolson
-#' @seealso  \code{\link{getChangeParams}} \code{\link{patternChange}} 
+#' @seealso  \code{\link{getChangeParams}} 
 #' @examples #sample data
 #' sample = matrix(sample(1:100), ncol=10)
 #' #normalize

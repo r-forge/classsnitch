@@ -24,7 +24,7 @@ cr_pred = predict(cr, sample, type="response")
 col = 2
 data("mutmap")
 data = mutmap
-data = data[-which(is.na(data[,col]),arr.ind=T),]
+data = data[-which(is.na(data[,col]),arr.ind=TRUE),]
 predobj = prediction(cr$votes[,2], data[,col])
 perfobj = performance(predobj, 'tpr', 'fpr')
 aucobj = performance(predobj, 'auc')

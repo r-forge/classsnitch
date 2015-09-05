@@ -9,7 +9,7 @@ predict.classifyRNA(object, sample=NULL)
 \arguments{
 \item{object}{A classifyRNA object (see classifyRNA function).}
 
-\item{sample}{A matrix of predictors for magnitude and pattern change (e.g. output from getChangeParams())}
+\item{sample}{An optional matrix of predictors for magnitude, pattern, location and pattern change (e.g. output from getChangeParams())}
 }
 \value{
 A list of "response", "vote" or "prob" predictions.

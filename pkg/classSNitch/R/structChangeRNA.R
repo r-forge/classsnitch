@@ -11,6 +11,9 @@
 #' \href{http://rmdb.stanford.edu/}{RNA Mapping Database}
 #' @seealso  \code{\link{getChangeParams}} \code{\link{classifyRNA}}
 #' @examples #get change parameters
+#' library("ROCR")
+#' library("gplots")
+#' 
 #' data("shape_ex")
 #' sample_shape = shape_ex
 #' sample = getChangeParams(sample_shape[2:nrow(sample_shape),], base=sample_shape[1,], trim=5)

@@ -25,7 +25,7 @@
 #' #get location change
 #' loc = locationChange(samp_nreduce)
 #'
-locationChange = function(sample, point, base=sample[1,], margin=1){
+locationChange = function(sample, point=rep(0,nrow(sample)), base=sample[1,], margin=1){
   
   #set optional paramater margin
   if(missing(margin)) {

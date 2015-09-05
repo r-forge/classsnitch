@@ -2,9 +2,8 @@
 #'
 #' This function predicts RNA structure change in SHAPE data
 #' @title predict.classifyRNA
-#' @aliases predict.classifyRNA
 #' @keywords predict prediction RNA structure change
-#' @usage predict(object, sample=NULL)
+#' @usage predict.classifyRNA(object, sample=NULL)
 #' @param object A classifyRNA object (see classifyRNA function).
 #' @param sample A matrix of predictors for magnitude and pattern change (e.g. output from getChangeParams())
 #' @export

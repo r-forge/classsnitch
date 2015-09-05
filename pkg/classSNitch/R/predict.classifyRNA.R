@@ -2,7 +2,6 @@
 #'
 #' This function predicts RNA structure change in SHAPE data
 #' @title predict.classifyRNA
-#' @aliases predict
 #' @keywords predict prediction RNA structure change
 #' @usage predict(object, sample=NULL, ...)
 #' @param object An object of classifyRNA (see classifyRNA function).

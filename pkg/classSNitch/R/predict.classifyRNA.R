@@ -3,6 +3,8 @@
 #' This function predicts RNA structure change in SHAPE data
 #' @title predict.classifyRNA
 #' @aliases predict
+#' @usage 
+#' \method{predict}{classifyRNA}(object, sample = NULL, ...)
 #' @keywords predict prediction RNA structure change
 #' @param object An object of classifyRNA (see classifyRNA function).
 #' @param sample An optional matrix of predictors for magnitude, pattern, location and pattern change (e.g. output from getChangeParams())

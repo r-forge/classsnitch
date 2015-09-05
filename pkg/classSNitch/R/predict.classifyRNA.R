@@ -27,7 +27,7 @@
 #' #get prediction
 #' cr_pred = predict(cr, magpat_ex[,2:5])
 #'
-predict.classifyRNA = function(object, sample){
+predict.classifyRNA = function(object, sample=NULL, ...){
   
   #check paramater object
   if(attr(object, "class") == "classifyRNA"){

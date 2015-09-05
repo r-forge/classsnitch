@@ -13,7 +13,7 @@
 #' @examples #get change parameters
 #' data("shape_ex")
 #' sample_shape = shape_ex
-#' sample = getChangeParams(sample_shape[2:nrow(sample_shape),], base=sample_shape[1,], trim=5) 
+#' sample = getChangeParams(sample_shape[2:nrow(sample_shape),], base=sample_shape[1,], trim=5)
 #' 
 #' #predict change
 #' data("magpat_ex")

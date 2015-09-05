@@ -4,7 +4,7 @@
 \alias{predict.classifyRNA}
 \title{predict.classifyRNA}
 \usage{
-predict(object, sample=NULL)
+predict.classifyRNA(object, sample=NULL)
 }
 \arguments{
 \item{object}{A classifyRNA object (see classifyRNA function).}

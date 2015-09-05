@@ -4,7 +4,7 @@
 \alias{getChangeParams}
 \title{getChangeParams}
 \usage{
-getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, point=rep(0,nrow(sample)) outfile=NULL, append=F)
+getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, point=rep(0,nrow(sample)), outfile=NULL, append=F)
 }
 \arguments{
 \item{sample}{A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).}

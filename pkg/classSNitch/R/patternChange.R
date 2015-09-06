@@ -90,6 +90,7 @@ patternChange = function(sample, base=sample[1,], margin=1, tol=0.1){
   #calculate pattern change
   pat = apply(sample, 1, pattern, base=base, tol=tol)
   pat[is.na(pat)] = 0
+  pat = pat/sqrt(nrow(sample))
   
   #return pattern change
   return(pat)

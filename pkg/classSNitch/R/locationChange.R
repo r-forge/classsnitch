@@ -70,7 +70,7 @@ locationChange = function(sample, point=rep(0,nrow(sample)), base=sample[1,], ma
   dist = rep(0, length(loc))
   for(i in 1:length(loc)){
     if(length(loc[[i]])!=0){
-      dist[i] = mean(abs(loc[[i]]-point[i]), na.rm=T)
+      dist[i] = mean(abs(loc[[i]]-point[i]), na.rm=T)/sqrt(nrow(sample))
     }
   }
   

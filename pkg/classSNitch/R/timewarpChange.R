@@ -52,7 +52,7 @@ timewarpChange = function(sample, base=sample[1,], margin=1){
     return(warp$distance)
   }
   tw = apply(sample, 1, timewarp, y=base)
-  tw = tw/sqrt(nrow(sample))
+  tw = tw/sqrt(ncol(sample))
   
   #return timewarp change
   return(tw)

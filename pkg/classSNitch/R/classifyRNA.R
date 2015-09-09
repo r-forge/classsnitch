@@ -64,28 +64,37 @@ classifyRNA = function(data=NULL, classes=2){
     classes = classes
   }
   
+  #set cutoff
+  if(classes == 1){
+    co = c(0.05,0.455,0.455)
+  } else if(classes == 2){
+    co = c(0.95, 0.05)
+  } else {
+    co = c(0.5, 0.5)
+  }
+  
   #set optional paramater data
   if(missing(data)){
     data = classSNitch::classify_default
     responses = data[,classes]
-    input = data[,8:11]
+    input = data[,8:12]
   } else {
     data = data
-    if(ncol(data) != 5){
+    if(ncol(data) != 6){
       stop("Incorrect data file format.")
     }
     responses = data[,1]
-    input = data[,2:5]
+    input = data[,2:6]
   }
   
   #get parameters
   input = cbind(as.factor(responses), input)
   rownames(input) = rownames(data)
-  colnames(input) = c("class", "mag", "pat", "loc", "tw") 
+  colnames(input) = c("class", "mag", "pat", "loc", "tw", "tc") 
   input = input[-which(is.na(input[,1]),arr.ind=T),]
   
   #random forest classification
-  rf = randomForest(class~., data=input, importance=TRUE, proximity=TRUE, ntree=5001)
+  rf = randomForest(class~., data=input, importance=TRUE, proximity=TRUE, ntree=5001, cutoff=co)
   
   #convert to a classifyRNA object
   cr = structure(rf, class = "classifyRNA")

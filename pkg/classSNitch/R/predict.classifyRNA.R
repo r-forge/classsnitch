@@ -7,7 +7,7 @@
 #' \method{predict}{classifyRNA}(object, sample = NULL, ...)
 #' @keywords predict prediction RNA structure change
 #' @param object An object of classifyRNA (see classifyRNA function).
-#' @param sample An optional matrix of predictors for magnitude, pattern, location and pattern change (e.g. output from getChangeParams())
+#' @param sample An optional matrix of predictors for magnitude, pattern, location, timewarp and trace change (e.g. output from getChangeParams())
 #' @param ...	Further arguments passed to or from other methods.
 #' @export
 #' @import randomForest
@@ -26,7 +26,7 @@
 #' #build classifier
 #' cr = classifyRNA(classes=2)
 #' #get prediction
-#' cr_pred = predict(cr, magpat_ex[,2:5])
+#' cr_pred = predict(cr, magpat_ex[,2:6])
 #'
 predict.classifyRNA = function(object, sample=NULL, ...){
   
@@ -40,7 +40,7 @@ predict.classifyRNA = function(object, sample=NULL, ...){
   #get optional parameters
   rf_pred = NULL
   if(!missing(sample)){
-    colnames(sample) = c("mag", "pat", "loc", "tw")
+    colnames(sample) = c("mag", "pat", "loc", "tw", "tc")
     rf_pred[[1]] = predict(rf, sample, type="response")
     rf_pred[[2]] = predict(rf, sample, type="vote", norm.votes=F)
     rf_pred[[3]] = predict(rf, sample, type="prob")

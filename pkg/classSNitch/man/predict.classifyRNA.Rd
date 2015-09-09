@@ -10,7 +10,7 @@
 \arguments{
 \item{object}{An object of classifyRNA (see classifyRNA function).}
 
-\item{sample}{An optional matrix of predictors for magnitude, pattern, location and pattern change (e.g. output from getChangeParams())}
+\item{sample}{An optional matrix of predictors for magnitude, pattern, location, timewarp and trace change (e.g. output from getChangeParams())}
 
 \item{...}{Further arguments passed to or from other methods.}
 }
@@ -36,7 +36,7 @@ data("magpat_ex")
 #build classifier
 cr = classifyRNA(classes=2)
 #get prediction
-cr_pred = predict(cr, magpat_ex[,2:5])
+cr_pred = predict(cr, magpat_ex[,2:6])
 }
 \author{
 Chanin Tolson

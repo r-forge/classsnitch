@@ -5,7 +5,7 @@
 \title{getChangeParams}
 \usage{
 getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL,
-   tol=0.1, point=rep(0,nrow(sample)), outfile=NULL, append=F)
+   tol=0.1, point=rep(0,nrow(sample)), window=ncol(sample), outfile=NULL, append=F)
 }
 \arguments{
 \item{sample}{A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).}
@@ -21,6 +21,8 @@ getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL,
 \item{tol}{An optional number indicating the tolerance for the change. Default is 0.1.}
 
 \item{point}{An optional numerical vector indicating the location of disruption (e.g. mutation point)}
+
+\item{window}{An optional number indicating the number of columns around the disruption to calculate. Default is the entire trace.}
 
 \item{outfile}{An optional string indicating the name of the output file. The output file will consist of two columns (magnitude change and pattern change). Default will not output a file.}
 
@@ -38,7 +40,7 @@ A function to get magnitude and pattern change parameters
 \details{
 This calculates the magnitude and pattern change in SHAPE reactivity.
 
-This function normalizes and reduces the noise in the sample. The magnitude, pattern, location and timewarp change are calculated for the sample using the magnitudeChange, patternChange, locationChange and timewarp functions.
+This function normalizes and reduces the noise in the sample. The magnitude, pattern, location, timewarp and trace change are calculated for the sample using the magnitudeChange, patternChange, locationChange, timewarpChange and traceChange functions.
 }
 \examples{
 #input files
@@ -50,7 +52,7 @@ params = getChangeParams(shape_ex, trim=5, outfile="out.txt")
 Chanin Tolson
 }
 \seealso{
-\code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{locationChange}} \code{\link{timewarpChange}}
+\code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{locationChange}} \code{\link{timewarpChange}} \code{\link{traceChange}}
 }
 \keyword{RNA}
 \keyword{change}

@@ -5,7 +5,7 @@
 #' @aliases getChangeParams
 #' @keywords change parameters RNA
 #' @usage getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL,
-#'    tol=0.1, point=rep(0,nrow(sample)), outfile=NULL, append=F)
+#'    tol=0.1, point=rep(0,nrow(sample)), window=ncol(sample), outfile=NULL, append=F)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
 #' @param base An optional numeric vector containing the values to which the samples are to be compared (e.g. a wild type SHAPE trace). Default is the first trace in each file.
 #' @param margin An optional number indicating if the samples are organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.
@@ -15,21 +15,22 @@
 #' @param point An optional numerical vector indicating the location of disruption (e.g. mutation point)
 #' @param outfile An optional string indicating the name of the output file. The output file will consist of two columns (magnitude change and pattern change). Default will not output a file.
 #' @param append An optional boolean to append the file if an outfile is given. Default is FALSE. 
+#' @param window An optional number indicating the number of columns around the disruption to calculate. Default is the entire trace.
 #' @export
-#' @details This function normalizes and reduces the noise in the sample. The magnitude, pattern, location and timewarp change are calculated for the sample using the magnitudeChange, patternChange, locationChange and timewarp functions. 
+#' @details This function normalizes and reduces the noise in the sample. The magnitude, pattern, location, timewarp and trace change are calculated for the sample using the magnitudeChange, patternChange, locationChange, timewarpChange and traceChange functions. 
 #' @return 
 #' \describe{
 #'  \item{"outmat"}{A three column numeric matrix for magnitude, pattern, location and timewarp change.} 
 #'  \item{"outfile"}{An optional output file for the matrix.}
 #' }
 #' @author Chanin Tolson
-#' @seealso  \code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{locationChange}} \code{\link{timewarpChange}}
+#' @seealso  \code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{locationChange}} \code{\link{timewarpChange}} \code{\link{traceChange}}
 #' @examples #input files
 #' data("shape_ex")
 #' #get change parameters
 #' params = getChangeParams(shape_ex, trim=5, outfile="out.txt")
 #'
-getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, point=rep(0,nrow(sample)), outfile=NULL, append=F){
+getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, point=rep(0,nrow(sample)), window=ncol(sample), outfile=NULL, append=F){
   
   #set optional paramater margin
   if(missing(margin)) {
@@ -80,6 +81,13 @@ getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0
     point = point
   }
   
+  #set optional paramater window
+  if(missing(window)){
+    window = floor(ncol(sample)/2)
+  } else {
+    window = floor(window/2)
+  }
+  
   #set optional paramater append
   if(missing(append)){
     append = F
@@ -121,10 +129,13 @@ getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0
   #timewarp change
   tw = timewarpChange(samp_qual, base)
   
+  #timewarp change
+  tc = traceChange(samp_qual, base, point=point, window=window)
+  
   #combine parameters
-  params = cbind(cbind(cbind(mag, pat), loc), tw)
+  params = cbind(cbind(cbind(cbind(mag, pat), loc), tw), tc)
   rownames(params) = rownames(sample)
-  colnames(params) = c("magnitude change", "pattern change", "location change",  "timewarp change")
+  colnames(params) = c("magnitude change", "pattern change", "location change",  "timewarp change", "trace change")
   
   #write parameter outfile
   if(missing(outfile)){

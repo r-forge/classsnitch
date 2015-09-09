@@ -70,7 +70,7 @@ classifyRNA = function(data=NULL, classes=2){
   } else if(classes == 2){
     co = c(0.95, 0.05)
   } else {
-    co = c(0.5, 0.5)
+    co = c(0.05, 0.95)
   }
   
   #set optional paramater data

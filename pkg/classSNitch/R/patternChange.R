@@ -57,11 +57,11 @@ patternChange = function(sample, base=sample[1,], margin=1, tol=0.1){
   }
   
   #values cannot be negative (raise the minimum value to at least 0)
-  if(sum(sample<0)>0){
+  if(sum(sample<0, na.rm=T)>0){
     sample = sample-min(sample, na.rm=T) 
     base = base-min(sample, na.rm=T) 
   }
-  if(sum(base<0)>0){
+  if(sum(base<0, na.rm=T)>0){
     base = base-min(base, na.rm=T)  
     sample = sample-min(base, na.rm=T) 
   }
@@ -84,13 +84,17 @@ patternChange = function(sample, base=sample[1,], margin=1, tol=0.1){
     patternb[pat>tol] = 1
     patternb[pat<(-tol)] = -1
     
-    return(cor(patterns, patternb, method="pearson"))
+    return(cor(patterns, patternb, method="pearson", use="pairwise.complete.obs"))
   }
   
   #calculate pattern change
+  options(warn=-1)
   pat = apply(sample, 1, pattern, base=base, tol=tol)
-  pat[is.na(pat)] = 0
-  pat = pat/sqrt(ncol(sample))
+  options(warn=0)
+  pat[is.na(pat)] = 1
+  sample[,is.na(base)]=NA
+  len = ncol(sample)-rowSums(is.na(sample))
+  pat = pat/sqrt(len)
   
   #return pattern change
   return(pat)

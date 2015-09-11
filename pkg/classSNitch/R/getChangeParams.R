@@ -32,6 +32,12 @@
 #'
 getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, point=rep(0,nrow(sample)), window=ncol(sample), outfile=NULL, append=F){
   
+  #set sample parameter
+  sample = as.matrix(sample)
+  if(dim(sample)[1]==1 || dim(sample)[2]==1){
+    sample = t(sample)
+  }
+  
   #set optional paramater margin
   if(missing(margin)) {
     margin = 1
@@ -56,7 +62,7 @@ getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0
   if(missing(trim)){
     trim = 0
   } else {
-    if(trim < 0 || trim > dim(sample)[margin]){
+    if(trim < 0 || trim > dim(sample)[2]){
       warning("Trim value not valid. Trim set to default.")
       trim = 0
     }
@@ -101,7 +107,8 @@ getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0
 
   #normalize
   samp_norm = normalize(sample, base)
-  base = (1.5*length(base)/sum(base))*base
+  base = (1.5*length(base)/sum(base, na.rm=T))*base
+  base[base<(-0.5)] = 0
   
   #set optional paramater high
   if(missing(high)){
@@ -124,7 +131,7 @@ getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0
   pat = patternChange(samp_qual, base, tol=tol)
   
   #location change
-  loc = locationChange(samp_qual, point, base)
+  loc = locationChange(samp_qual, point=point, base=base, tol=tol)
   
   #timewarp change
   tw = timewarpChange(samp_qual, base)

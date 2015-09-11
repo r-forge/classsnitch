@@ -47,16 +47,21 @@ normalize = function(sample, base=sample[1,], margin=1){
   }
   
   #set average reactivity for wild-type to 1.5 
-  base = (1.5*length(base)/sum(base))*base
+  base = (1.5*length(base)/sum(base, na.rm=T))*base
   
   #function to optimize difference between wild-type and sample
   optimizeNorm = function (x, samp, base){
-    sum(abs(base-x*samp))
+    sum(abs(base-x*samp), na.rm=T)
   }
   
-  #loop through each sample
-  opt = apply(sample, 1, optimize, f=optimizeNorm, interval=c(0,1), tol=0.0001, base=base)
-  samp_norm = do.call(rbind, lapply(1:length(opt), function(i){sample[i,]*opt[[i]]$minimum}))
+  #optimize each sample
+  if(dim(sample)[1]==1){
+    opt = optimize(f=optimizeNorm, interval=c(0,1), tol=0.0001, base=base, samp=sample)
+    samp_norm = sample*opt$minimum
+  } else{
+    opt = apply(sample, 1, optimize, f=optimizeNorm, interval=c(0,1), tol=0.0001, base=base)
+    samp_norm = do.call(rbind, lapply(1:length(opt), function(i){sample[i,]*opt[[i]]$minimum}))
+  }
   
   #organize output data
   if(margin==2){

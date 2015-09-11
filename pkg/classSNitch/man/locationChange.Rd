@@ -4,7 +4,7 @@
 \alias{locationChange}
 \title{locationChange}
 \usage{
-locationChange(sample, point=rep(0,nrow(sample)), base=sample[1,], margin=1)
+locationChange(sample, point=rep(0,nrow(sample)), base=sample[1,], margin=1, tol=0.1)
 }
 \arguments{
 \item{sample}{A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).}
@@ -14,6 +14,8 @@ locationChange(sample, point=rep(0,nrow(sample)), base=sample[1,], margin=1)
 \item{base}{An optional numeric vector containing the values to which the samples are to be compared (e.g. a wildtype SHAPE trace). Default is the first trace in sample.}
 
 \item{margin}{An optional number indicating if the samples are organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.}
+
+\item{tol}{An optional number indicating the tolerance for the change. Default is 0.1.}
 }
 \value{
 A numeric vector of location changes.
@@ -24,7 +26,7 @@ A function to get the location change between samples
 \details{
 This function determines
 
-This function calculates the distance of change from the disruption using changepoint analysis to determine the location of change.
+This function calculates the distance of change from the disruption using the change in pattern to determine the location of change.
 }
 \examples{
 #sample data

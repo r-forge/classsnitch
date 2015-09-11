@@ -45,14 +45,28 @@ timewarpChange = function(sample, base=sample[1,], margin=1){
     base = base
   }
   
+  #remove NA values
+  s = sample
+  b = base
+  base[which(is.na(sample),arr.ind=T)[1]]=0
+  sample[,is.na(base)]=0
+  sample[is.na(sample)]=0
+  base[is.na(base)]=0
+  
   #calculate timewarp change
   timewarp = function(x, y){
     warp = dtw(x, y, distance.only=T)
     
     return(warp$distance)
   }
-  tw = apply(sample, 1, timewarp, y=base)
-  tw = tw/sqrt(ncol(sample))
+  if(dim(sample)[1]==1){
+    tw = dtw(as.vector(sample[1,]), as.vector(base))$distance
+  } else{ 
+    tw = apply(sample, 1, timewarp, y=base)  
+  }
+  s[,is.na(b)]=NA
+  len = ncol(sample)-rowSums(is.na(s))
+  tw = tw/sqrt(len)
   
   #return timewarp change
   return(tw)

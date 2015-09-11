@@ -48,7 +48,7 @@ reduceNoise = function(sample, base=sample[1,], margin=1, trim=0, high=boxplot(s
   if(missing(trim)){
     trim = 0
   } else {
-    if(trim < 0 || trim > dim(sample)[margin]){
+    if(trim < 0 || trim > dim(sample)[2]){
       warning("Trim value not valid. Trim set to default.")
       trim = 0
     }
@@ -73,8 +73,17 @@ reduceNoise = function(sample, base=sample[1,], margin=1, trim=0, high=boxplot(s
     return(samp)
   }
   
-  #peak filter
-  samp_qual = do.call(rbind, apply(sample, 1, highPeakFilter, base=as.list(base), high=high))
+  #high peak filter
+  if(dim(sample)[1]==1 || dim(sample)[2]==1){
+    samp_qual = highPeakFilter(sample, base=base, high=high)
+  } else{
+    samp_qual = do.call(rbind, apply(sample, 1, highPeakFilter, base=as.list(base), high=high))  
+  }
+  
+  
+  #low peak filter
+  samp_qual[sample<(-0.5)] = 0
+  base[base<(-0.5)] = 0
   
   #function to trim ends from sample
   trimEnds = function(samp, base, trim){
@@ -85,7 +94,11 @@ reduceNoise = function(sample, base=sample[1,], margin=1, trim=0, high=boxplot(s
   
   #trim ends
   if(trim >= 0){
-    samp_qual = do.call(rbind, apply(samp_qual, 1, trimEnds, base=as.list(base), trim=trim))
+    if(dim(sample)[1]==1){
+      samp_qual = trimEnds(samp_qual, base=base, trim=trim)
+    } else{
+      samp_qual = do.call(rbind, apply(samp_qual, 1, trimEnds, base=as.list(base), trim=trim))
+    }
   }
   
   #organize output data

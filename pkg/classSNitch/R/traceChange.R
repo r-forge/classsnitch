@@ -61,14 +61,18 @@ traceChange = function(sample, base=sample[1,], margin=1, point=rep(0,nrow(sampl
     window = floor(window/2)
   }
   
-  diff = function(samp, base, point){
+  diff = function(samp, base){
     d = samp-base
     
     return(d)
   }
   
   #calculate trace change
-  d = apply(sample, 1, diff, base=base, point=point)
+  if(dim(sample)[1]==1){
+    d = sample - base
+  } else {
+    d = apply(sample, 1, diff, base=base)
+  }
   
   #narrow down by location
   tracediff = NULL
@@ -83,7 +87,10 @@ traceChange = function(sample, base=sample[1,], margin=1, point=rep(0,nrow(sampl
     } else if((point[i]+window)<=ncol(sample)){
       end = point[i]+window 
     }
-    tracediff[i] = mean(sample[i,start:end])
+    tracediff[i] = mean(sample[i,start:end], na.rm=T)
+    if(is.na(tracediff[i])){
+      tracediff[i] = 0
+    }
   }
   
   #return magnitude change

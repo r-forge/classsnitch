@@ -45,8 +45,14 @@ magnitudeChange = function(sample, base=sample[1,], margin=1){
   }
   
   #calculate magnitude change
-  mag = apply(sample, 1, cor, x=base, method="pearson")
-  mag = mag/sqrt(ncol(sample))
+  if(dim(sample)[1]==1){
+    mag = cor(as.vector(sample), base, method="pearson", use="pairwise.complete.obs")
+  } else{
+    mag = apply(sample, 1, cor, x=base, method="pearson", use="pairwise.complete.obs")
+  }
+  sample[,is.na(base)]=NA
+  len = ncol(sample)-rowSums(is.na(sample))
+  mag = mag/sqrt(len)
   
   #return magnitude change
   return(mag)

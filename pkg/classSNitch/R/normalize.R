@@ -4,13 +4,18 @@
 #' @title normalize
 #' @aliases normalize
 #' @keywords normalize between-sample RNA
-#' @usage normalize(sample, base=sample[1,], margin=1)
+#' @usage normalize(sample, base=sample[1,], margin=1, outbase=FALSE)
 #' @param sample A numeric matrix containing values to be normalized (e.g. a set of mutant SHAPE traces).
 #' @param base An optional numeric vector containing the values to which the sample is to be normalized (e.g. a wild type SHAPE trace). Default is the first trace in sample.
 #' @param margin An optional number indicating if sample is organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.
+#' @param outbase An optional boolean indicating if the normalized base should be returned. Default is FALSE.
 #' @export
 #' @details This function normalizes the average value of the base vector to 1.5. Each row (or column) in sample is then normalized by minimizing the absolute difference between the base and the sample row (or column). 
-#' @return A normalized numeric matrix with the same dimensions as sample.
+#' @return 
+#' \describe{
+#'  \item{"samp_norm"}{A normalized numeric matrix with the same dimensions as sample.} 
+#'  \item{"samp_norm"}{An optional list with two elements: normalized numeric matrix with the same dimensions as sample and a normalized vector the same length as base.}
+#' }
 #' @author Chanin Tolson
 #' @seealso  \code{\link{getChangeParams}} 
 #' @examples #sample data
@@ -24,7 +29,7 @@
 #' #normalize
 #' samp_norm = normalize(sample, base)
 #'
-normalize = function(sample, base=sample[1,], margin=1){
+normalize = function(sample, base=sample[1,], margin=1, outbase=FALSE){
   
   #set optional paramater margin
   if(missing(margin)) {
@@ -44,6 +49,13 @@ normalize = function(sample, base=sample[1,], margin=1){
     base = sample[1,]
   } else {
     base = base
+  }
+  
+  #set optional paramater outbase
+  if(missing(base)) {
+    outbase = FALSE
+  } else {
+    outbase = outbase
   }
   
   #set average reactivity for wild-type to 1.5 
@@ -68,6 +80,15 @@ normalize = function(sample, base=sample[1,], margin=1){
     samp_norm = t(samp_norm)
   }
   samp_norm = matrix(unlist(samp_norm), nrow=nrow(samp_norm))
+  base[base<(-0.5)] = 0
+  
+  if(outbase==TRUE){
+    samp_out = NULL
+    samp_out[[1]] = samp_norm
+    samp_out[[2]] = base
+    samp_norm = samp_out
+    names(samp_norm) = c("sample.normalized", "base.normalized")
+  }
   
   #return normalized sample
   return(samp_norm)

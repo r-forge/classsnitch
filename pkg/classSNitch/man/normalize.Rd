@@ -4,7 +4,7 @@
 \alias{normalize}
 \title{normalize}
 \usage{
-normalize(sample, base=sample[1,], margin=1)
+normalize(sample, base=sample[1,], margin=1, outbase=FALSE)
 }
 \arguments{
 \item{sample}{A numeric matrix containing values to be normalized (e.g. a set of mutant SHAPE traces).}
@@ -12,9 +12,14 @@ normalize(sample, base=sample[1,], margin=1)
 \item{base}{An optional numeric vector containing the values to which the sample is to be normalized (e.g. a wild type SHAPE trace). Default is the first trace in sample.}
 
 \item{margin}{An optional number indicating if sample is organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.}
+
+\item{outbase}{An optional boolean indicating if the normalized base should be returned. Default is FALSE.}
 }
 \value{
-A normalized numeric matrix with the same dimensions as sample.
+\describe{
+ \item{"samp_norm"}{A normalized numeric matrix with the same dimensions as sample.}
+ \item{"samp_norm"}{An optional list with two elements: normalized numeric matrix with the same dimensions as sample and a normalized vector the same length as base.}
+}
 }
 \description{
 A Between-Sample Normalization Function

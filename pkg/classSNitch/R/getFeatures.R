@@ -1,14 +1,16 @@
-#' A function to get magnitude and pattern change parameters
+#' A function to get the features for describing RNA structure change. These features can be used in classification of RNA structure change.
 #'
-#' This calculates the magnitude and pattern change in SHAPE reactivity.
-#' @title getChangeParams
-#' @aliases getChangeParams
-#' @keywords change parameters RNA
-#' @usage getChangeParams(sample, base=NULL, margin=1, trim=0, high=NULL,
+#' This calculates the change in SHAPE reactivity traces.
+#' @title getFeatures
+#' @aliases getFeatures
+#' @keywords change features RNA structure
+#' @usage getFeatures(sample, base=NULL, margin=1,  norm=T, noise=T, trim=0, high=NULL,
 #'    tol=0.1, point=rep(0,nrow(sample)), window=ncol(sample), outfile=NULL, append=F)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
 #' @param base An optional numeric vector containing the values to which the samples are to be compared (e.g. a wild type SHAPE trace). Default is the first trace in each file.
 #' @param margin An optional number indicating if the samples are organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.
+#' @param norm An optional boolean to normalize the sample. Default is TRUE. 
+#' @param noise An optional boolean to reduce noise in the sample. Default is TRUE. 
 #' @param trim An optional number indicating the number of nucleotides to be trimed from the ends. Default is 0.
 #' @param high An optional number indicating the reactivity above which reactivities are considered high. Default is third quartile of the sample in each file.
 #' @param tol An optional number indicating the tolerance for the change. Default is 0.1.
@@ -17,20 +19,20 @@
 #' @param append An optional boolean to append the file if an outfile is given. Default is FALSE. 
 #' @param window An optional number indicating the number of columns around the disruption to calculate. Default is the entire trace.
 #' @export
-#' @details This function normalizes and reduces the noise in the sample. The magnitude, pattern, location, timewarp and trace change are calculated for the sample using the magnitudeChange, patternChange, locationChange, timewarpChange and traceChange functions. 
+#' @details This function calculates the magnitude correlation coefficient, pattern  correlation coefficient, average change distance, dynamic time warping, average trace difference and rna length. 
 #' @return 
 #' \describe{
 #'  \item{"outmat"}{A three column numeric matrix for magnitude, pattern, location and timewarp change.} 
 #'  \item{"outfile"}{An optional output file for the matrix.}
 #' }
 #' @author Chanin Tolson
-#' @seealso  \code{\link{magnitudeChange}} \code{\link{patternChange}} \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{classifyRNA}} \code{\link{predict.classifyRNA}} \code{\link{locationChange}} \code{\link{timewarpChange}} \code{\link{traceChange}}
+#' @seealso  \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{getMagCC}} \code{\link{getPatternCC}} \code{\link{getChangeDist}} \code{\link{getTimeWarping}} \code{\link{getTraceDiff}}
 #' @examples #input files
 #' data("shape_ex")
-#' #get change parameters
-#' params = getChangeParams(shape_ex, trim=5, outfile="out.txt")
+#' #get features
+#' params = getFeatures(shape_ex, trim=5, outfile="out.txt")
 #'
-getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0.1, point=rep(0,nrow(sample)), window=ncol(sample), outfile=NULL, append=F){
+getFeatures = function(sample, base=NULL, margin=1, norm=T, noise=T, trim=0, high=NULL, tol=0.1, point=rep(0,nrow(sample)), window=ncol(sample), outfile=NULL, append=F){
   
   #set sample parameter
   sample = as.matrix(sample)
@@ -58,6 +60,20 @@ getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0
     base = base
   }
   
+  #set optional paramater norm
+  if(missing(norm)){
+    norm = TRUE
+  } else {
+    norm = norm
+  }
+  
+  #set optional paramater norm
+  if(missing(noise)){
+    noise = TRUE
+  } else {
+    noise = noise
+  }
+  
   #set optional paramater trim
   if(missing(trim)){
     trim = 0
@@ -65,8 +81,9 @@ getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0
     if(trim < 0 || trim > dim(sample)[2]){
       warning("Trim value not valid. Trim set to default.")
       trim = 0
+    } else if(trim > 0){
+      trim = trim-1 
     }
-    trim = trim-1
   }
   
   #set optional paramater  tol
@@ -105,10 +122,15 @@ getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0
     append = append
   }
 
-  #normalize
-  samp_norm = normalize(sample, base)
-  base = (1.5*length(base)/sum(base, na.rm=T))*base
-  base[base<(-0.5)] = 0
+  #set optional paramater normalize
+  if(norm == TRUE){
+    #normalize
+    samp_norm = normalize(sample, base)
+    base = (1.5*length(base)/sum(base, na.rm=T))*base
+    base[base<(-0.5)] = 0  
+  } else {
+    samp_norm = sample
+  }
   
   #set optional paramater high
   if(missing(high)){
@@ -120,40 +142,47 @@ getChangeParams = function(sample, base=NULL, margin=1, trim=0, high=NULL, tol=0
     }
     high = high
   }
-      
-  #high peak filter
-  samp_qual = reduceNoise(samp_norm, base, trim=trim, high=high)
+  
+  #reduce noise
+  if(noise == TRUE){
+    samp_qual = reduceNoise(samp_norm, base, trim=trim, high=high)
+  } else{
+    samp_qual = samp_norm
+  }
       
   #magnitude change
-  mag = magnitudeChange(samp_qual, base)
+  mag = getMagCC(samp_qual, base)
       
   #pattern change
-  pat = patternChange(samp_qual, base, tol=tol)
+  pat = getPatternCC(samp_qual, base, tol=tol)
   
   #location change
-  loc = locationChange(samp_qual, point=point, base=base, tol=tol)
+  loc = getChangeDist(samp_qual, point=point, base=base, tol=tol)
   
   #timewarp change
-  tw = timewarpChange(samp_qual, base)
+  tw = getTimeWarping(samp_qual, base)
   
   #timewarp change
-  tc = traceChange(samp_qual, base, point=point, window=window)
+  tc = getTraceDiff(samp_qual, base, point=point, window=window)
   
-  #combine parameters
-  params = cbind(cbind(cbind(cbind(mag, pat), loc), tw), tc)
-  rownames(params) = rownames(sample)
-  colnames(params) = c("magnitude change", "pattern change", "location change",  "timewarp change", "trace change")
+  #rna length
+  len = ncol(samp_qual)-sum(is.na(samp_qual))
+  
+  #combine features
+  features = cbind(mag, pat, loc, tw, tc, len)
+  rownames(features) = rownames(sample)
+  colnames(features) = c("magnitude change", "pattern change", "change distance",  "time warping", "trace difference", "length")
   
   #write parameter outfile
   if(missing(outfile)){
   } else{
     if(append==F){
-      write.table(params, outfile, quote=F, sep="\t", row.names=T, col.names=T)
+      write.table(features, outfile, quote=F, sep="\t", row.names=T, col.names=T)
     } else{
-      write.table(params, outfile, quote=F, sep="\t", row.names=T, col.names=F, append=T)
+      write.table(features, outfile, quote=F, sep="\t", row.names=T, col.names=F, append=T)
     }
   }
   
-  #return magnitude and pattern change
-  return(params)
+  #return features
+  return(features)
 }

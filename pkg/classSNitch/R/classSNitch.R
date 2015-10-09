@@ -9,27 +9,27 @@
 #' @import ROCR
 #' @references A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R News 2(3), 18--22 (randomForest package) \cr\cr
 #' \href{http://rmdb.stanford.edu/}{RNA Mapping Database}
-#' @seealso  \code{\link{getChangeParams}} \code{\link{classifyRNA}}
-#' @examples #get change parameters
+#' @seealso  \code{\link{getFeatures}} \code{\link{classifyRNA}}
+#' @examples #get change features
 #' library("ROCR")
 #' library("gplots")
 #' 
 #' data("shape_ex")
 #' sample_shape = shape_ex
-#' sample = getChangeParams(sample_shape[2:nrow(sample_shape),], base=sample_shape[1,], trim=5)
+#' sample = getFeatures(sample_shape[2:nrow(sample_shape),], base=sample_shape[1,], trim=5)
 #' 
 #' #predict change
-#' data("magpat_ex")
-#' sample_class = magpat_ex
-#' cr = classifyRNA(sample_class, classes=2)
+#' data("mutmap")
+#' sample_class = mutmap[,c(1,4:9)]
+#' cr = classifyRNA(sample_class, classes=1)
 #' cr_pred = predict(cr, sample, type="response")
 #' 
 #' #plot ROC curve
-#' col = 2
+#' col = 1
 #' data("mutmap")
 #' data = mutmap
 #' data = data[-which(is.na(data[,col]),arr.ind=TRUE),]
-#' predobj = prediction(cr$votes[,2], data[,col])
+#' predobj = prediction(cr$votes[,1], data[,col])
 #' perfobj = performance(predobj, 'tpr', 'fpr')
 #' aucobj = performance(predobj, 'auc')
 #' plot(perfobj@@x.values[[1]], perfobj@@y.values[[1]], lwd=2, 

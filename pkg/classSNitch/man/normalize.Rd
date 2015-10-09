@@ -45,7 +45,7 @@ samp_norm = normalize(sample, base)
 Chanin Tolson
 }
 \seealso{
-\code{\link{getChangeParams}}
+\code{\link{getFeatures}}
 }
 \keyword{RNA}
 \keyword{between-sample}

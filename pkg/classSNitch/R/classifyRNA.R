@@ -4,9 +4,10 @@
 #' @title classifyRNA
 #' @aliases classifyRNA
 #' @keywords classifier RNA structure change random forest
-#' @usage classifyRNA(data=NULL, classes=2)
+#' @usage classifyRNA(data=NULL, classes=1, cutoff=NULL)
 #' @param data Optional data to build the classifier. Default is pre-loaded data.
-#' @param classes An optional number indicating which class style to use. Only used when data is not supplied. Default is 2.
+#' @param classes An optional number indicating which class style to use. Only used when data is not supplied. Default is 1.
+#' @param cutoff An optional vector of length equal to number of classes. The winning class for an observation is the one with the maximum ratio of proportion of votes to cutoff. Default is 1/k where k is the number of classes (i.e., majority vote wins).
 #' @export
 #' @import randomForest
 #' @details This function builds a random forest classifier for RNA structure change using the randomForest package.
@@ -28,73 +29,80 @@
 #' }
 #' @note Organization of the data file: header=TRUE, tab-delimited .txt file
 #' \itemize{
-#'  \item{"column 1"}{ RNA name} 
-#'  \item{"column 2"}{ Classification} 
-#'  \item{"column 3"}{ Magnitude predictor} 
-#'  \item{"column 4"}{ Pattern predictor} 
+#'  \item{"column 1"}{ class label} 
+#'  \item{"column 2"}{ magnitude change} 
+#'  \item{"column 3"}{ pattern change} 
+#'  \item{"column 4"}{ change distance} 
+#'  \item{"column 5"}{ time warping} 
+#'  \item{"column 6"}{ trace difference} 
+#'  \item{"column 7"}{ rna length} 
 #' }
 #' Options for classes: 
 #' \itemize{
-#'  \item{"1"}{ none v. local v. global}
-#'  \item{"2"}{ none v. local/global}
-#'  \item{"3"}{ global v. none/local} 
-#'  \item{"4"}{ local v. global}
+#'  \item{"1"}{ none v. local/global}
+#'  \item{"2"}{ global v. none/local} 
+#'  \item{"3"}{ local v. global}
 #' }
 #' The default data has been gathered from the RNA Mapping Database mutate and map experiments.
 #' @author Chanin Tolson
 #' @references A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R News 2(3), 18--22 (randomForest package) \cr\cr
 #' \href{http://rmdb.stanford.edu/}{RNA Mapping Database}
-#' @seealso  \code{\link{getChangeParams}} \code{\link{predict.classifyRNA}}
+#' @seealso  \code{\link{getFeatures}}
 #' @examples
 #' #build classifier
-#' rf = classifyRNA(classes=2)
+#' rf = classifyRNA(classes=1)
 #' #get confusion matrix
 #' rf$confusion
 #' 
-classifyRNA = function(data=NULL, classes=2){
+classifyRNA = function(data=NULL, classes=1, cutoff=NULL){
   
   #set optional paramater classes
   if(missing(classes)){
-    classes = 2
+    classes = 1
   } else {
-    if(!(classes %in% c(1,2,3,4))){
+    if(!(classes %in% c(1,2,3))){
       warning("classes set to default.")
-      classes = 2
+      classes = 1
     }
     classes = classes
-  }
-  
-  #set cutoff
-  if(classes == 1){
-    co = c(0.05,0.455,0.455)
-  } else if(classes == 2){
-    co = c(0.95, 0.05)
-  } else {
-    co = c(0.05, 0.95)
   }
   
   #set optional paramater data
   if(missing(data)){
     data = classSNitch::classify_default
     responses = data[,classes]
-    input = data[,8:12]
+    input = data[,4:9]
   } else {
     data = data
-    if(ncol(data) != 6){
+    if(ncol(data) != 7){
       stop("Incorrect data file format.")
     }
     responses = data[,1]
-    input = data[,2:6]
+    input = data[,2:7]
   }
   
-  #get parameters
-  input = cbind(as.factor(responses), input)
+  #set optional paramater cutoff
+  if(!missing(cutoff)){
+    if(length(cutoff)!=length(unique(responses[-which(is.na(responses))]))){
+      warning("cutoff set to default.")
+      cutoff = rep(1/length(unique(responses[-which(is.na(responses))])), length(unique(responses[-which(is.na(responses))])))
+    }
+    cutoff = cutoff
+  } else {
+    cutoff = rep(1/length(unique(responses[-which(is.na(responses))])), length(unique(responses[-which(is.na(responses))])))
+  }
+
+  #get features
+  input = as.data.frame(cbind(responses, input))
   rownames(input) = rownames(data)
-  colnames(input) = c("class", "mag", "pat", "loc", "tw", "tc") 
-  input = input[-which(is.na(input[,1]),arr.ind=T),]
+  colnames(input) = c("class", "mag", "pat", "loc", "tw", "tc", "len") 
+  if(sum(is.na(input[,1]), na.rm=T)>0){
+    input = input[-which(is.na(input[,1]),arr.ind=T),]
+  }
+  input[,1] = factor(as.numeric(input[,1]==1))
   
   #random forest classification
-  rf = randomForest(class~., data=input, importance=TRUE, proximity=TRUE, ntree=5001, cutoff=co)
+  rf = randomForest(class~., data=input, importance=TRUE, proximity=TRUE, ntree=5001, cutoff=cutoff)
   
   #convert to a classifyRNA object
   cr = structure(rf, class = "classifyRNA")

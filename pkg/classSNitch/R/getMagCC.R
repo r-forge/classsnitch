@@ -1,28 +1,28 @@
-#' A function to get the magnitude change between samples
+#' A function to get the correlation coefficient between sample magnitudes
 #'
 #' This function compares the magnitude change between samples.
-#' @title magnitudeChange
-#' @aliases magnitudeChange
-#' @keywords magnitude change RNA
-#' @usage magnitudeChange(sample, base=sample[1,], margin=1)
+#' @title getMagCC
+#' @aliases getMagCC
+#' @keywords magnitude correlation-coefficient RNA
+#' @usage getMagCC(sample, base=sample[1,], margin=1)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
 #' @param base An optional numeric vector containing the values to which the samples are to be compared (e.g. a wildtype SHAPE trace). Default is the first trace in sample.
 #' @param margin An optional number indicating if the samples are organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.
 #' @export
 #' @details This function calculates the Pearson correlation coefficient between the base vector and each row (or column) in sample.
-#' @return A numeric vector of magnitude changes.
+#' @return A numeric vector of correlation coefficients.
 #' @author Chanin Tolson
-#' @seealso  \code{\link{getChangeParams}} 
+#' @seealso  \code{\link{getFeatures}} 
 #' @examples #sample data
 #' sample = matrix(sample(1:100), ncol=10)
 #' #normalize
 #' samp_norm = normalize(sample)
 #' #reduce noise
 #' samp_nreduce = reduceNoise(samp_norm, trim=1, high=4)
-#' #get magnitude change
-#' mag = magnitudeChange(samp_nreduce)
+#' #get magnitude correlation coefficient
+#' mag = getMagCC(samp_nreduce)
 #'
-magnitudeChange = function(sample, base=sample[1,], margin=1){
+getMagCC = function(sample, base=sample[1,], margin=1){
   
   #set optional paramater margin
   if(missing(margin)) {
@@ -51,8 +51,7 @@ magnitudeChange = function(sample, base=sample[1,], margin=1){
     mag = apply(sample, 1, cor, x=base, method="pearson", use="pairwise.complete.obs")
   }
   sample[,is.na(base)]=NA
-  len = ncol(sample)-rowSums(is.na(sample))
-  mag = mag/sqrt(len)
+  mag = mag
   
   #return magnitude change
   return(mag)

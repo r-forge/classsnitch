@@ -14,7 +14,7 @@
 #' @details This function reduces the noise in SHAPE data. For positions where both the base vector and the sample row (or column) is above the high value, the position in the sample row (or column) is set equal to that position in the base vector. The function trims the data by setting the ends of sample equal to the ends of the base vector.
 #' @return A noise reduced numeric matrix with the same dimensions as sample.
 #' @author Chanin Tolson
-#' @seealso  \code{\link{getChangeParams}} 
+#' @seealso  \code{\link{getFeatures}} 
 #' @examples #sample data
 #' sample = matrix(sample(1:100), ncol=10)
 #' #normalize
@@ -51,8 +51,9 @@ reduceNoise = function(sample, base=sample[1,], margin=1, trim=0, high=boxplot(s
     if(trim < 0 || trim > dim(sample)[2]){
       warning("Trim value not valid. Trim set to default.")
       trim = 0
+    } else if(trim > 0){
+      trim = trim-1 
     }
-    trim = trim-1
   }
   
   #set optional paramater high

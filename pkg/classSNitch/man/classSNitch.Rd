@@ -9,26 +9,26 @@
 Mutations in RNA will create a riboSNitch, if important structural elements are disrupted. Recent ultra-high throughput techniques, such as SHAPE-MaP and PARS, enable the collection of structural RNA information on a genome-wide scale. With the ability to gather genome-wide structural information on RNA, it is important to accurately classify these structural data in order to identify those structural changes that result in a phenotypic outcome. We have developed an automated approach to classify structure change in SHAPE data. This method utilizes random forest classification on a set of pattern and magnitude parameters from the mutate-and-map SHAPE data set (or another user specified data set) to build a classifier. The classifier is then used to identify structure change in other SHAPE traces. Enabling scientists to identify structure change may help guide experiments that examine RNA structure and its role in biological processes.
 }
 \examples{
-#get change parameters
+#get change features
 library("ROCR")
 library("gplots")
 
 data("shape_ex")
 sample_shape = shape_ex
-sample = getChangeParams(sample_shape[2:nrow(sample_shape),], base=sample_shape[1,], trim=5)
+sample = getFeatures(sample_shape[2:nrow(sample_shape),], base=sample_shape[1,], trim=5)
 
 #predict change
-data("magpat_ex")
-sample_class = magpat_ex
-cr = classifyRNA(sample_class, classes=2)
+data("mutmap")
+sample_class = mutmap[,c(1,4:9)]
+cr = classifyRNA(sample_class, classes=1)
 cr_pred = predict(cr, sample, type="response")
 
 #plot ROC curve
-col = 2
+col = 1
 data("mutmap")
 data = mutmap
 data = data[-which(is.na(data[,col]),arr.ind=TRUE),]
-predobj = prediction(cr$votes[,2], data[,col])
+predobj = prediction(cr$votes[,1], data[,col])
 perfobj = performance(predobj, 'tpr', 'fpr')
 aucobj = performance(predobj, 'auc')
 plot(perfobj@x.values[[1]], perfobj@y.values[[1]], lwd=2,
@@ -44,6 +44,6 @@ A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R N
 \href{http://rmdb.stanford.edu/}{RNA Mapping Database}
 }
 \seealso{
-\code{\link{getChangeParams}} \code{\link{classifyRNA}}
+\code{\link{getFeatures}} \code{\link{classifyRNA}}
 }
 

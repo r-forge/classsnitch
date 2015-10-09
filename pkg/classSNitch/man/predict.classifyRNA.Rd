@@ -5,17 +5,19 @@
 \alias{predict.classifyRNA}
 \title{predict.classifyRNA}
 \usage{
-\method{predict}{classifyRNA}(object, sample = NULL, ...)
+\method{predict}{classifyRNA}(object, sample = NULL, resp="prob", ...)
 }
 \arguments{
 \item{object}{An object of classifyRNA (see classifyRNA function).}
 
-\item{sample}{An optional matrix of predictors for magnitude, pattern, location, timewarp and trace change (e.g. output from getChangeParams())}
+\item{sample}{An optional matrix of predictors for magnitude correlation coefficient, pattern  correlation coefficient, change distance, time warping and trace difference (e.g. output from getFeatures())}
 
-\item{...}{Further arguments passed to or from other methods.}
+\item{resp}{An optional string to determine type of return value. Default is "prob".}
+
+\item{...}{additional arguments for specific methods}
 }
 \value{
-A list of "response", "vote" or "prob" predictions.
+A matrix of "response", "vote" or "prob" predictions.
 \describe{
  \item{"response"}{ Predicted classes (classes with majority vote)}
  \item{"vote"}{ Vote count fraction (one column for each class and one row for each input)}
@@ -32,11 +34,11 @@ This function predicts RNA structure change in SHAPE data using a random forest 
 }
 \examples{
 #input data
-data("magpat_ex")
+data("mutmap")
 #build classifier
 cr = classifyRNA(classes=2)
 #get prediction
-cr_pred = predict(cr, magpat_ex[,2:6])
+cr_pred = predict(cr, mutmap[,4:9])
 }
 \author{
 Chanin Tolson
@@ -45,7 +47,7 @@ Chanin Tolson
 A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R News 2(3), 18--22 (randomForest package)
 }
 \seealso{
-\code{\link{getChangeParams}} \code{\link{classifyRNA}}
+\code{\link{getFeatures}} \code{\link{classifyRNA}}
 }
 \keyword{RNA}
 \keyword{change}

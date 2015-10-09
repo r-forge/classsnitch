@@ -40,7 +40,7 @@ samp_nreduce = reduceNoise(samp_norm, trim=1, high=4)
 Chanin Tolson
 }
 \seealso{
-\code{\link{getChangeParams}}
+\code{\link{getFeatures}}
 }
 \keyword{RNA}
 \keyword{SHAPE}

@@ -1,30 +1,30 @@
-#' A function to get the location change between samples
+#' A function to get the average distance of change from the disruption site
 #'
-#' This function determines 
-#' @title locationChange
-#' @aliases locationChange
-#' @keywords location change RNA
-#' @usage locationChange(sample, point=rep(0,nrow(sample)), base=sample[1,], margin=1, tol=0.1)
+#' This function determines the average distance of change from the disruption site
+#' @title getChangeDist
+#' @aliases getChangeDist
+#' @keywords distance change RNA
+#' @usage getChangeDist(sample, point=rep(0,nrow(sample)), base=sample[1,], margin=1, tol=0.1)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
 #' @param point An optional numeric vector containing the location of the disruption (e.g. the mutation in an RNA)
 #' @param base An optional numeric vector containing the values to which the samples are to be compared (e.g. a wildtype SHAPE trace). Default is the first trace in sample.
 #' @param margin An optional number indicating if the samples are organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.
 #' @param tol An optional number indicating the tolerance for the change. Default is 0.1.
 #' @export
-#' @details This function calculates the distance of change from the disruption using the change in pattern to determine the location of change.
-#' @return A numeric vector of location changes.
+#' @details This function calculates the average distance of change from the disruption using the change in pattern to determine the location of changes.
+#' @return A numeric vector of change distances.
 #' @author Chanin Tolson
-#' @seealso  \code{\link{getChangeParams}}
+#' @seealso  \code{\link{getFeatures}}
 #' @examples #sample data
 #' sample = matrix(sample(1:100), ncol=10)
 #' #normalize
 #' samp_norm = normalize(sample)
 #' #reduce noise
 #' samp_nreduce = reduceNoise(samp_norm, trim=1, high=4)
-#' #get location change
-#' loc = locationChange(samp_nreduce)
+#' #get change distance
+#' loc = getChangeDist(samp_nreduce)
 #'
-locationChange = function(sample, point=rep(0,nrow(sample)), base=sample[1,], margin=1, tol=0.1){
+getChangeDist = function(sample, point=rep(0,nrow(sample)), base=sample[1,], margin=1, tol=0.1){
   
   #set optional paramater margin
   if(missing(margin)) {
@@ -120,7 +120,7 @@ locationChange = function(sample, point=rep(0,nrow(sample)), base=sample[1,], ma
   }
   sample[,is.na(base)]=NA
   len = ncol(sample)-rowSums(is.na(sample))
-  dist = dist/sqrt(len)
+  dist = dist/len
   
   #return average distance from the disruption
   return(dist)

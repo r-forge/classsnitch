@@ -1,10 +1,10 @@
-#' A function to get the average trace between samples
+#' A function to get the average trace difference between samples
 #'
 #' This function compares the average trace difference between samples.
-#' @title traceChange
-#' @aliases traceChange
+#' @title getTraceDiff
+#' @aliases getTraceDiff
 #' @keywords trace change RNA
-#' @usage traceChange(sample, base=sample[1,], margin=1, 
+#' @usage getTraceDiff(sample, base=sample[1,], margin=1, 
 #'    point=rep(0,nrow(sample)), window=ncol(sample))
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
 #' @param base An optional numeric vector containing the values to which the samples are to be compared (e.g. a wildtype SHAPE trace). Default is the first trace in sample.
@@ -13,19 +13,19 @@
 #' @param window An optional number indicating the number of columns around the disruption to calculate. Default is the entire trace.
 #' @export
 #' @details This function calculates the average trace difference between the base vector and each row (or column) in sample.
-#' @return A numeric vector of trace changes.
+#' @return A numeric vector of trace differences.
 #' @author Chanin Tolson
-#' @seealso  \code{\link{getChangeParams}} 
+#' @seealso  \code{\link{getFeatures}} 
 #' @examples #sample data
 #' sample = matrix(sample(1:100), ncol=10)
 #' #normalize
 #' samp_norm = normalize(sample)
 #' #reduce noise
 #' samp_nreduce = reduceNoise(samp_norm, trim=1, high=4)
-#' #get trace change
-#' tc = traceChange(samp_nreduce)
+#' #get trace difference
+#' tc = getTraceDiff(samp_nreduce)
 #'
-traceChange = function(sample, base=sample[1,], margin=1, point=rep(0,nrow(sample)), window=ncol(sample)){
+getTraceDiff = function(sample, base=sample[1,], margin=1, point=rep(0,nrow(sample)), window=ncol(sample)){
   
   #set optional paramater margin
   if(missing(margin)) {

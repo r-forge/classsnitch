@@ -17,7 +17,7 @@
 #'  \item{"samp_norm"}{An optional list with two elements: normalized numeric matrix with the same dimensions as sample and a normalized vector the same length as base.}
 #' }
 #' @author Chanin Tolson
-#' @seealso  \code{\link{getChangeParams}} 
+#' @seealso  \code{\link{getFeatures}} 
 #' @examples #sample data
 #' sample = matrix(sample(1:100), ncol=10)
 #' #normalize
@@ -58,8 +58,13 @@ normalize = function(sample, base=sample[1,], margin=1, outbase=FALSE){
     outbase = outbase
   }
   
+  #remove large negative values
+  base[base<(-0.5)] = NA
+  sample[sample<(-0.5)] = NA
+  
   #set average reactivity for wild-type to 1.5 
-  base = (1.5*length(base)/sum(base, na.rm=T))*base
+  base = (1.5*sum(!is.na(base))/sum(base, na.rm=T))*base
+  base[base<(-0.5)] = NA
   
   #function to optimize difference between wild-type and sample
   optimizeNorm = function (x, samp, base){
@@ -80,7 +85,6 @@ normalize = function(sample, base=sample[1,], margin=1, outbase=FALSE){
     samp_norm = t(samp_norm)
   }
   samp_norm = matrix(unlist(samp_norm), nrow=nrow(samp_norm))
-  base[base<(-0.5)] = 0
   
   if(outbase==TRUE){
     samp_out = NULL
@@ -89,6 +93,7 @@ normalize = function(sample, base=sample[1,], margin=1, outbase=FALSE){
     samp_norm = samp_out
     names(samp_norm) = c("sample.normalized", "base.normalized")
   }
+  samp_norm[samp_norm<(-0.5)] = NA
   
   #return normalized sample
   return(samp_norm)

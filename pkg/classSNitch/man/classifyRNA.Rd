@@ -4,12 +4,14 @@
 \alias{classifyRNA}
 \title{classifyRNA}
 \usage{
-classifyRNA(data=NULL, classes=2)
+classifyRNA(data=NULL, classes=1, cutoff=NULL)
 }
 \arguments{
 \item{data}{Optional data to build the classifier. Default is pre-loaded data.}
 
-\item{classes}{An optional number indicating which class style to use. Only used when data is not supplied. Default is 2.}
+\item{classes}{An optional number indicating which class style to use. Only used when data is not supplied. Default is 1.}
+
+\item{cutoff}{An optional vector of length equal to number of classes. The winning class for an observation is the one with the maximum ratio of proportion of votes to cutoff. Default is 1/k where k is the number of classes (i.e., majority vote wins).}
 }
 \value{
 A classifyRNA object, based on randomForest object (see randomForest package)
@@ -40,23 +42,25 @@ This function builds a random forest classifier for RNA structure change using t
 \note{
 Organization of the data file: header=TRUE, tab-delimited .txt file
 \itemize{
- \item{"column 1"}{ RNA name}
- \item{"column 2"}{ Classification}
- \item{"column 3"}{ Magnitude predictor}
- \item{"column 4"}{ Pattern predictor}
+ \item{"column 1"}{ class label}
+ \item{"column 2"}{ magnitude change}
+ \item{"column 3"}{ pattern change}
+ \item{"column 4"}{ change distance}
+ \item{"column 5"}{ time warping}
+ \item{"column 6"}{ trace difference}
+ \item{"column 7"}{ rna length}
 }
 Options for classes:
 \itemize{
- \item{"1"}{ none v. local v. global}
- \item{"2"}{ none v. local/global}
- \item{"3"}{ global v. none/local}
- \item{"4"}{ local v. global}
+ \item{"1"}{ none v. local/global}
+ \item{"2"}{ global v. none/local}
+ \item{"3"}{ local v. global}
 }
 The default data has been gathered from the RNA Mapping Database mutate and map experiments.
 }
 \examples{
 #build classifier
-rf = classifyRNA(classes=2)
+rf = classifyRNA(classes=1)
 #get confusion matrix
 rf$confusion
 }
@@ -68,7 +72,7 @@ A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R N
 \href{http://rmdb.stanford.edu/}{RNA Mapping Database}
 }
 \seealso{
-\code{\link{getChangeParams}} \code{\link{predict.classifyRNA}}
+\code{\link{getFeatures}}
 }
 \keyword{RNA}
 \keyword{change}

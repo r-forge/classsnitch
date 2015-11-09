@@ -30,18 +30,20 @@
 #' @note Organization of the data file: header=TRUE, tab-delimited .txt file
 #' \itemize{
 #'  \item{"column 1"}{ class label} 
-#'  \item{"column 2"}{ magnitude change} 
-#'  \item{"column 3"}{ pattern change} 
-#'  \item{"column 4"}{ change distance} 
-#'  \item{"column 5"}{ time warping} 
-#'  \item{"column 6"}{ trace difference} 
-#'  \item{"column 7"}{ rna length} 
+#'  \item{"column 2"}{ pattern correlation} 
+#'  \item{"column 3"}{ dynamic time warping} 
+#'  \item{"column 4"}{ contiguousness} 
+#'  \item{"column 5"}{ magnitude correlation} 
+#'  \item{"column 6"}{ change variance} 
+#'  \item{"column 7"}{ eSDC} 
+#'  \item{"column 8"}{ change range} 
 #' }
 #' Options for classes: 
 #' \itemize{
-#'  \item{"1"}{ none v. local/global}
-#'  \item{"2"}{ global v. none/local} 
-#'  \item{"3"}{ local v. global}
+#'  \item{"1"}{ none v. local v. global}
+#'  \item{"2"}{ none v. local/global} 
+#'  \item{"3"}{ none/local v. global}
+#'  \item{"4"}{ local v. global}
 #' }
 #' The default data has been gathered from the RNA Mapping Database mutate and map experiments.
 #' @author Chanin Tolson
@@ -60,7 +62,7 @@ classifyRNA = function(data=NULL, classes=1, cutoff=NULL){
   if(missing(classes)){
     classes = 1
   } else {
-    if(!(classes %in% c(1,2,3))){
+    if(!(classes %in% c(1,2,3,4))){
       warning("classes set to default.")
       classes = 1
     }
@@ -71,14 +73,14 @@ classifyRNA = function(data=NULL, classes=1, cutoff=NULL){
   if(missing(data)){
     data = classSNitch::classify_default
     responses = data[,classes]
-    input = data[,4:9]
+    input = data[,5:11]
   } else {
     data = data
-    if(ncol(data) != 7){
+    if(ncol(data) != 8){
       stop("Incorrect data file format.")
     }
     responses = data[,1]
-    input = data[,2:7]
+    input = data[,2:8]
   }
   
   #set optional paramater cutoff
@@ -95,11 +97,11 @@ classifyRNA = function(data=NULL, classes=1, cutoff=NULL){
   #get features
   input = as.data.frame(cbind(responses, input))
   rownames(input) = rownames(data)
-  colnames(input) = c("class", "mag", "pat", "loc", "tw", "tc", "len") 
+  colnames(input) = c("class", "pat", "tw", "contig", "mag", "var", "eSDC", "range") 
   if(sum(is.na(input[,1]), na.rm=T)>0){
     input = input[-which(is.na(input[,1]),arr.ind=T),]
   }
-  input[,1] = factor(as.numeric(input[,1]==1))
+  input[,1] = factor(as.numeric(input[,1]))
   
   #random forest classification
   rf = randomForest(class~., data=input, importance=TRUE, proximity=TRUE, ntree=5001, cutoff=cutoff)

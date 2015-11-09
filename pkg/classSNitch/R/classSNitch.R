@@ -20,12 +20,12 @@
 #' 
 #' #predict change
 #' data("mutmap")
-#' sample_class = mutmap[,c(1,4:9)]
-#' cr = classifyRNA(sample_class, classes=1)
+#' sample_class = mutmap[,c(2,5:11)]
+#' cr = classifyRNA(sample_class, classes=2)
 #' cr_pred = predict(cr, sample, type="response")
 #' 
 #' #plot ROC curve
-#' col = 1
+#' col = 2
 #' data("mutmap")
 #' data = mutmap
 #' data = data[-which(is.na(data[,col]),arr.ind=TRUE),]

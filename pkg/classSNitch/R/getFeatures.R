@@ -1,11 +1,11 @@
 #' A function to get the features for describing RNA structure change. These features can be used in classification of RNA structure change.
 #'
-#' This calculates the change in SHAPE reactivity traces.
+#' This calculates the features describing change in SHAPE reactivity traces.
 #' @title getFeatures
 #' @aliases getFeatures
 #' @keywords change features RNA structure
 #' @usage getFeatures(sample, base=NULL, margin=1,  norm=T, noise=T, trim=0, high=NULL,
-#'    tol=0.1, point=rep(0,nrow(sample)), window=ncol(sample), outfile=NULL, append=F)
+#'    tol=0.1, outfile=NULL, append=F)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
 #' @param base An optional numeric vector containing the values to which the samples are to be compared (e.g. a wild type SHAPE trace). Default is the first trace in each file.
 #' @param margin An optional number indicating if the samples are organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.
@@ -14,25 +14,23 @@
 #' @param trim An optional number indicating the number of nucleotides to be trimed from the ends. Default is 0.
 #' @param high An optional number indicating the reactivity above which reactivities are considered high. Default is third quartile of the sample in each file.
 #' @param tol An optional number indicating the tolerance for the change. Default is 0.1.
-#' @param point An optional numerical vector indicating the location of disruption (e.g. mutation point)
 #' @param outfile An optional string indicating the name of the output file. The output file will consist of two columns (magnitude change and pattern change). Default will not output a file.
 #' @param append An optional boolean to append the file if an outfile is given. Default is FALSE. 
-#' @param window An optional number indicating the number of columns around the disruption to calculate. Default is the entire trace.
 #' @export
-#' @details This function calculates the magnitude correlation coefficient, pattern  correlation coefficient, average change distance, dynamic time warping, average trace difference and rna length. 
+#' @details This function calculates the  pattern correlation coefficient, dynamic time warping, contiguousness of change, magnitude correlation coefficient, change of variance, experimental structural disruption coefficient, and change range. These are features used to describe structure change in SHAPE traces. 
 #' @return 
 #' \describe{
-#'  \item{"outmat"}{A three column numeric matrix for magnitude, pattern, location and timewarp change.} 
+#'  \item{"outmat"}{A seven column numeric matrix for pattern correlation coefficient, dynamic time warping, contiguousness of change, magnitude correlation coefficient, change of variance, experimental structural disruption coefficient, and change range} 
 #'  \item{"outfile"}{An optional output file for the matrix.}
 #' }
 #' @author Chanin Tolson
-#' @seealso  \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{getMagCC}} \code{\link{getPatternCC}} \code{\link{getChangeDist}} \code{\link{getTimeWarping}} \code{\link{getTraceDiff}}
+#' @seealso  \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{getPatternCC}} \code{\link{getTimeWarping}} \code{\link{getContiguous}} \code{\link{getMagCC}} \code{\link{getESDC}} \code{\link{getChangeRange}}
 #' @examples #input files
 #' data("shape_ex")
 #' #get features
 #' params = getFeatures(shape_ex, trim=5, outfile="out.txt")
 #'
-getFeatures = function(sample, base=NULL, margin=1, norm=T, noise=T, trim=0, high=NULL, tol=0.1, point=rep(0,nrow(sample)), window=ncol(sample), outfile=NULL, append=F){
+getFeatures = function(sample, base=NULL, margin=1, norm=T, noise=T, trim=0, high=NULL, tol=0.1, outfile=NULL, append=F){
   
   #set sample parameter
   sample = as.matrix(sample)
@@ -97,20 +95,6 @@ getFeatures = function(sample, base=NULL, margin=1, norm=T, noise=T, trim=0, hig
     tol = tol
   }
   
-  #set optional paramater point
-  if(missing(point)){
-    point = rep(0, nrow(sample))
-  } else {
-    point = point
-  }
-  
-  #set optional paramater window
-  if(missing(window)){
-    window = floor(ncol(sample)/2)
-  } else {
-    window = floor(window/2)
-  }
-  
   #set optional paramater append
   if(missing(append)){
     append = F
@@ -150,28 +134,31 @@ getFeatures = function(sample, base=NULL, margin=1, norm=T, noise=T, trim=0, hig
     samp_qual = samp_norm
   }
       
-  #magnitude change
-  mag = getMagCC(samp_qual, base)
-      
-  #pattern change
+  #pattern correlation coefficient
   pat = getPatternCC(samp_qual, base, tol=tol)
   
-  #location change
-  loc = getChangeDist(samp_qual, point=point, base=base, tol=tol)
-  
-  #timewarp change
+  #dynamic time warping
   tw = getTimeWarping(samp_qual, base)
   
-  #timewarp change
-  tc = getTraceDiff(samp_qual, base, point=point, window=window)
+  #change contiguousness
+  contig = getContiguous(samp_qual, base=base, tol=tol)
   
-  #rna length
-  len = ncol(samp_qual)-sum(is.na(samp_qual))
+  #magnitude correlation coefficient
+  mag = getMagCC(samp_qual, base)
+  
+  #change variance
+  var = getChangeVar(samp_qual, base=base, tol=tol)
+  
+  #experimental structural disruption coefficient
+  eSDC = getESDC(samp_qual, base)
+  
+  #change range
+  range = getChangeRange(samp_qual, base=base, tol=tol)
   
   #combine features
-  features = cbind(mag, pat, loc, tw, tc, len)
+  features = cbind(pat, tw, contig, mag, var, eSDC, range)
   rownames(features) = rownames(sample)
-  colnames(features) = c("magnitude change", "pattern change", "change distance",  "time warping", "trace difference", "length")
+  colnames(features) = c("pattern change", "time warping", "change contiguousness", "magnitude change", "change variance", "eSDC", "range")
   
   #write parameter outfile
   if(missing(outfile)){

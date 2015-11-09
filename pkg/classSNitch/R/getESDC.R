@@ -1,16 +1,16 @@
-#' A function to get the correlation coefficient between sample magnitudes
+#' A function to get experimental structure disruption coefficient (eSDC)
 #'
-#' This function compares the magnitude change between samples.
-#' @title getMagCC
-#' @aliases getMagCC
-#' @keywords magnitude correlation-coefficient RNA
-#' @usage getMagCC(sample, base=sample[1,], margin=1)
+#' This function to calculate the eSDC between samples.
+#' @title getESDC
+#' @aliases getESDC
+#' @keywords trace eSDC RNA
+#' @usage getESDC(sample, base=sample[1,], margin=1)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
 #' @param base An optional numeric vector containing the values to which the samples are to be compared (e.g. a wildtype SHAPE trace). Default is the first trace in sample.
 #' @param margin An optional number indicating if the samples are organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.
 #' @export
-#' @details This function calculates the Pearson correlation coefficient between the base vector and each row (or column) in sample.
-#' @return A numeric vector of correlation coefficients.
+#' @details This function calculates the eSDC between the base vector and each row (or column) in sample.
+#' @return A numeric vector of eSDC values.
 #' @author Chanin Tolson
 #' @seealso  \code{\link{getFeatures}} 
 #' @examples #sample data
@@ -19,10 +19,9 @@
 #' samp_norm = normalize(sample)
 #' #reduce noise
 #' samp_nreduce = reduceNoise(samp_norm, trim=1, high=4)
-#' #get magnitude correlation coefficient
-#' mag = getMagCC(samp_nreduce)
-#'
-getMagCC = function(sample, base=sample[1,], margin=1){
+#' #get trace difference
+#' eSDC = getESDC(samp_nreduce)
+getESDC = function(sample, base=sample[1,], margin=1){
   
   #set optional paramater margin
   if(missing(margin)) {
@@ -44,13 +43,13 @@ getMagCC = function(sample, base=sample[1,], margin=1){
     base = base
   }
   
-  #calculate magnitude change
+  #calculate eSDC
   if(dim(sample)[1]==1){
-    mag = cor(as.vector(sample), base, method="pearson", use="pairwise.complete.obs")
+    eSDC = cor(as.vector(sample), base, method="pearson", use="pairwise.complete.obs")/sqrt(length(sample))
   } else{
-    mag = apply(sample, 1, cor, x=base, method="pearson", use="pairwise.complete.obs")
+    eSDC = apply(sample, 1, cor, x=base, method="pearson", use="pairwise.complete.obs")/sqrt(ncol(sample))
   }
   
-  #return magnitude change
-  return(mag)
+  #return eSDC
+  return(eSDC)
 }

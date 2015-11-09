@@ -1,30 +1,29 @@
-#' A function to get the average distance of change from the disruption site
+#' A function to get the range of change position for a trace
 #'
-#' This function determines the average distance of change from the disruption site
-#' @title getChangeDist
-#' @aliases getChangeDist
-#' @keywords distance change RNA
-#' @usage getChangeDist(sample, point=rep(0,nrow(sample)), base=sample[1,], margin=1, tol=0.1)
+#' This function finds the range of change position for a trace
+#' @title getChangeRange
+#' @aliases getChangeRange
+#' @keywords trace range change RNA
+#' @usage getChangeRange(sample, base=sample[1,], margin=1, tol=0.1)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
-#' @param point An optional numeric vector containing the location of the disruption (e.g. the mutation in an RNA)
 #' @param base An optional numeric vector containing the values to which the samples are to be compared (e.g. a wildtype SHAPE trace). Default is the first trace in sample.
 #' @param margin An optional number indicating if the samples are organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.
 #' @param tol An optional number indicating the tolerance for the change. Default is 0.1.
 #' @export
-#' @details This function calculates the average distance of change from the disruption using the change in pattern to determine the location of changes.
-#' @return A numeric vector of change distances.
+#' @details This function calculates the range of change positions for each row (or column) in sample.
+#' @return A numeric vector of trace change ranges.
 #' @author Chanin Tolson
-#' @seealso  \code{\link{getFeatures}}
+#' @seealso  \code{\link{getFeatures}} 
 #' @examples #sample data
 #' sample = matrix(sample(1:100), ncol=10)
 #' #normalize
 #' samp_norm = normalize(sample)
 #' #reduce noise
 #' samp_nreduce = reduceNoise(samp_norm, trim=1, high=4)
-#' #get change distance
-#' loc = getChangeDist(samp_nreduce)
+#' #get change range
+#' cr = getChangeRange(samp_nreduce)
 #'
-getChangeDist = function(sample, point=rep(0,nrow(sample)), base=sample[1,], margin=1, tol=0.1){
+getChangeRange = function(sample, base=sample[1,], margin=1, tol=0.1){
   
   #set optional paramater margin
   if(missing(margin)) {
@@ -44,13 +43,6 @@ getChangeDist = function(sample, point=rep(0,nrow(sample)), base=sample[1,], mar
     base = sample[1,]
   } else {    
     base = base
-  }
-  
-  #set optional paramater point
-  if(missing(point)){
-    point = rep(0, nrow(sample))
-  } else {
-    point = point
   }
   
   #set optional paramater  tol
@@ -74,8 +66,8 @@ getChangeDist = function(sample, point=rep(0,nrow(sample)), base=sample[1,], mar
     sample = sample-min(base, na.rm=T) 
   }
   
-  #function to get the location of pattern changes
-  patternLocs = function(samp, base, tol){
+  #function to get change range
+  rgChange = function(samp, base, tol){
     #initialize
     samp = as.numeric(samp)
     base = as.numeric(base)
@@ -92,36 +84,21 @@ getChangeDist = function(sample, point=rep(0,nrow(sample)), base=sample[1,], mar
     patternb[pat>tol] = 1
     patternb[pat<(-tol)] = -1
     
-    loc = which(abs(patterns-patternb)>0, arr.ind=T)
+    #get change
+    change = patterns-patternb
     
-    return(loc)
-  }
-  
-  if(dim(sample)[1]==1){
-    loc = NULL
-    options(warn=-1)
-    loc[[1]] = t(apply(sample, 1, patternLocs, base=base, tol=tol))
-    options(warn=0)
-    loc[is.na(loc)] = 1 
-  } else{
-    options(warn=-1)
-    loc = apply(sample, 1, patternLocs, base=base, tol=tol)
-    options(warn=0)
-    loc[is.na(loc)] = 1 
-  }
-
-  
-  #find average distance from the disruption
-  dist = rep(0, length(loc))
-  for(i in 1:length(loc)){
-    if(length(loc[[i]])!=0){
-      dist[i] = mean(abs(loc[[i]]-point[i]), na.rm=T)
+    #get range of change
+    rg = 0
+    if(length(which(change!=0))>0){
+      rg = length(which(change!=0)[1]:which(change!=0)[length(which(change!=0))])
     }
+    
+    return(rg)
   }
-  sample[,is.na(base)]=NA
-  len = ncol(sample)-rowSums(is.na(sample))
-  dist = dist/len
   
-  #return average distance from the disruption
-  return(dist)
+  #range of change
+  chgrange = apply(sample, 1, rgChange, base=base, tol=tol)
+  
+  #return range of change
+  return(chgrange)
 }

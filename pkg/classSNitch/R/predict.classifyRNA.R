@@ -9,7 +9,7 @@
 #' @param object An object of classifyRNA (see classifyRNA function).
 #' @param sample An optional matrix of predictors for magnitude correlation coefficient, pattern  correlation coefficient, change distance, time warping and trace difference (e.g. output from getFeatures())
 #' @param resp An optional string to determine type of return value. Default is "prob".
-#' @param ... additional arguments for specific methods
+#' @param ... additional arguments for predict method
 #' @export
 #' @import randomForest
 #' @details This function predicts RNA structure change in SHAPE data using a random forest classifier. 
@@ -27,7 +27,7 @@
 #' #build classifier
 #' cr = classifyRNA(classes=2)
 #' #get prediction
-#' cr_pred = predict(cr, mutmap[,4:9])
+#' cr_pred = predict(cr, mutmap[,5:11])
 #'
 predict.classifyRNA = function(object, sample=NULL, resp="prob", ...){
   
@@ -51,7 +51,8 @@ predict.classifyRNA = function(object, sample=NULL, resp="prob", ...){
   #get optional argument sample
   rf_pred = NULL
   if(!missing(sample)){
-    colnames(sample) = c("mag", "pat", "loc", "tw", "tc", "len")
+    sample = sample[,1:7]
+    colnames(sample) = c("pat", "tw", "contig", "mag", "var", "eSDC", "range") 
     if(resp =="response"){
       rf_pred = predict(rf, sample, type="response")
     } else if(resp == "vote"){

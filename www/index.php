@@ -68,8 +68,8 @@ Chanin Tolson and Alain Laederach
 </figure></td>
 <td  width="75%">
 <br>
-Package source (use this for Linux / Solaris): <a href="docs/classSNitch_0.12.0.tar.gz" download>classSNitch_0.12.0.tar.gz</a><br>
-Windows binary: <a href="docs/classSNitch_0.11.0.zip" download>classSNitch_0.12.0.zip</a><br>
+Package source (use this for Linux / Solaris): <a href="docs/classSNitch_0.13.0.tar.gz" download>classSNitch_0.13.0.tar.gz</a><br>
+Windows binary: <a href="docs/classSNitch_0.13.0.zip" download>classSNitch_0.13.0.zip</a><br>
 Repository: classSNitch is also available on <a href="http://r-forge.r-project.org/projects/classsnitch/">R-Forge</a>
 </td>
 </tr>
@@ -79,8 +79,8 @@ Repository: classSNitch is also available on <a href="http://r-forge.r-project.o
 </figure></td>
 <td  width="75%">
 <br>
-Linux: At the command line type "R CMD INSTALL classSNitch_0.12.0.tar.gz".<br><br>
-Windows: From the pull-down menu, click on "Packages->Install Packages from local zip file", and then select the downloaded file docs/classSNitch_0.12.0.zip. <br><br>
+Linux: At the command line type "R CMD INSTALL classSNitch_0.13.0.tar.gz".<br><br>
+Windows: From the pull-down menu, click on "Packages->Install Packages from local zip file", and then select the downloaded file docs/classSNitch_0.13.0.zip. <br><br>
 Make sure R is installed on your computer. It is freely available on <a href="http://www.r-project.org."></a>R-Forge<br>
 You will also need randomForest, ROCR, and gplots packages (available from the <a href="https://cran.r-project.org/">Comprehensive R Archive Network)</a>.
 

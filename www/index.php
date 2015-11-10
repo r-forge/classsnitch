@@ -82,7 +82,7 @@ Repository: classSNitch is also available on <a href="http://r-forge.r-project.o
 Linux: At the command line type "R CMD INSTALL classSNitch_0.13.0.tar.gz".<br><br>
 Windows: From the pull-down menu, click on "Packages->Install Packages from local zip file", and then select the downloaded file docs/classSNitch_0.13.0.zip. <br><br>
 Make sure R is installed on your computer. It is freely available on <a href="http://www.r-project.org."></a>R-Forge<br>
-You will also need randomForest, ROCR, and gplots packages (available from the <a href="https://cran.r-project.org/">Comprehensive R Archive Network)</a>.
+You will also need randomForest, dtw, ROCR, and gplots packages (available from the <a href="https://cran.r-project.org/">Comprehensive R Archive Network)</a>.
 
 </td>
 </tr>

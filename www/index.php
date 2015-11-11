@@ -121,7 +121,7 @@ cr_pred = predict(cr, sample, type="response")
 </figure></td>
 <td  width="75%">
 <br>
-Send an email to <a href="mailto:ctolson@email.unc.edu">Chanin Tolson</a>. We welcome any questions, comments or suggestions. If you have any publications using classSNitch, we would be interested in seeing how the package is being used.
+Send an email to <a href="mailto:laederachlab@gmail.com">Laederach Lab</a>. We welcome any questions, comments or suggestions. If you have any publications using classSNitch, we would be interested in seeing how the package is being used.
 </td>
 </tr>
 </table>

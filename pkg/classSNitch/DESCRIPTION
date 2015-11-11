@@ -3,8 +3,8 @@ Title: Classifies RNA Structure Change in Chemical Mapping Data
 Version: 0.13.0
 Authors@R: person("Chanin", "Tolson", email = "ctolson@email.unc.edu", role = c("aut", "cre"))
 Author: Chanin Tolson [aut, cre]
-Maintainer: Chanin Tolson <ctolson@email.unc.edu>
-URL: http://www.unc.edu/~ctolson/classSNitch/classSNitch.html
+Maintainer: Laederach Lab <laederachlab@gmail.com>
+URL: http://classsnitch.r-forge.r-project.org
 Description: Mutations in RNA will create a riboSNitch, if important structural
     elements are disrupted.Recent ultra-high throughput techniques, such as SHAPE-
     MaP and PARS, enable the collection of structural RNA information on a genome-

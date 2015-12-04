@@ -7,6 +7,19 @@
 \description{
 A dataset of class labels and change features from SHAPE-traces in the RMDB
 }
+\note{
+Organization of the data file: header=TRUE, tab-delimited .rda file
+\itemize{
+ \item{"column 1"}{ class label} 
+ \item{"column 2"}{ pattern correlation} 
+ \item{"column 3"}{ dynamic time warping} 
+ \item{"column 4"}{ contiguousness} 
+ \item{"column 5"}{ magnitude correlation} 
+ \item{"column 6"}{ change variance} 
+ \item{"column 7"}{ eSDC} 
+ \item{"column 8"}{ change range} 
+}
+}
 \references{
 \href{http://rmdb.stanford.edu/}{RNA Mapping Database}
 }

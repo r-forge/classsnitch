@@ -4,7 +4,7 @@
 \name{mutmap}
 \alias{mutmap}
 \title{Consensus classification, magnitude change, and pattern change in example RNAs}
-\format{An object of class \code{data.frame} with 2670 rows and 11 columns.}
+\format{An object of class \code{matrix} with 167 rows and 8 columns.}
 \usage{
 mutmap
 }

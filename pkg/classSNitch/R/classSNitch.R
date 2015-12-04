@@ -15,21 +15,16 @@
 #' library("gplots")
 #' 
 #' data("shape_ex")
-#' sample_shape = shape_ex
-#' sample = getFeatures(sample_shape[2:nrow(sample_shape),], base=sample_shape[1,], trim=5)
+#' sample = getFeatures(shape_ex[2:nrow(shape_ex),], base=shape_ex[1,], trim=5)
 #' 
 #' #predict change
 #' data("mutmap")
-#' sample_class = mutmap[,c(2,5:11)]
-#' cr = classifyRNA(sample_class, classes=2)
+#' cr = classifyRNA(mutmap)
 #' cr_pred = predict(cr, sample, type="response")
 #' 
-#' #plot ROC curve
-#' col = 2
+#' #plot ROC curve (no change v. local/global change)
 #' data("mutmap")
-#' data = mutmap
-#' data = data[-which(is.na(data[,col]),arr.ind=TRUE),]
-#' predobj = prediction(cr$votes[,1], data[,col])
+#' predobj = prediction(cr$votes[,1], mutmap[,1]==1)
 #' perfobj = performance(predobj, 'tpr', 'fpr')
 #' aucobj = performance(predobj, 'auc')
 #' plot(perfobj@@x.values[[1]], perfobj@@y.values[[1]], lwd=2, 

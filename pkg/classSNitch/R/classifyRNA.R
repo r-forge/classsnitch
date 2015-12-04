@@ -4,9 +4,8 @@
 #' @title classifyRNA
 #' @aliases classifyRNA
 #' @keywords classifier RNA structure change random forest
-#' @usage classifyRNA(data=NULL, classes=1, cutoff=NULL)
+#' @usage classifyRNA(data=NULL, cutoff=NULL)
 #' @param data Optional data to build the classifier. Default is pre-loaded data.
-#' @param classes An optional number indicating which class style to use. Only used when data is not supplied. Default is 1.
 #' @param cutoff An optional vector of length equal to number of classes. The winning class for an observation is the one with the maximum ratio of proportion of votes to cutoff. Default is 1/k where k is the number of classes (i.e., majority vote wins).
 #' @export
 #' @import randomForest
@@ -38,13 +37,6 @@
 #'  \item{"column 7"}{ eSDC} 
 #'  \item{"column 8"}{ change range} 
 #' }
-#' Options for classes: 
-#' \itemize{
-#'  \item{"1"}{ none v. local v. global}
-#'  \item{"2"}{ none v. local/global} 
-#'  \item{"3"}{ none/local v. global}
-#'  \item{"4"}{ local v. global}
-#' }
 #' The default data has been gathered from the RNA Mapping Database mutate and map experiments.
 #' @author Chanin Tolson
 #' @references A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R News 2(3), 18--22 (randomForest package) \cr\cr
@@ -52,28 +44,17 @@
 #' @seealso  \code{\link{getFeatures}}
 #' @examples
 #' #build classifier
-#' rf = classifyRNA(classes=1)
+#' rf = classifyRNA()
 #' #get confusion matrix
 #' rf$confusion
 #' 
-classifyRNA = function(data=NULL, classes=1, cutoff=NULL){
-  
-  #set optional paramater classes
-  if(missing(classes)){
-    classes = 1
-  } else {
-    if(!(classes %in% c(1,2,3,4))){
-      warning("classes set to default.")
-      classes = 1
-    }
-    classes = classes
-  }
+classifyRNA = function(data=NULL, cutoff=NULL){
   
   #set optional paramater data
   if(missing(data)){
     data = classSNitch::classify_default
-    responses = data[,classes]
-    input = data[,5:11]
+    responses = data[,1]
+    input = data[,2:8]
   } else {
     data = data
     if(ncol(data) != 8){
@@ -85,13 +66,24 @@ classifyRNA = function(data=NULL, classes=1, cutoff=NULL){
   
   #set optional paramater cutoff
   if(!missing(cutoff)){
-    if(length(cutoff)!=length(unique(responses[-which(is.na(responses))]))){
-      warning("cutoff set to default.")
-      cutoff = rep(1/length(unique(responses[-which(is.na(responses))])), length(unique(responses[-which(is.na(responses))])))
+    if(sum(is.na(responses))>0){
+      if(length(cutoff)!=length(unique(responses[-which(is.na(responses))]))){
+        warning("cutoff set to default.")
+        cutoff = rep(1/length(unique(responses[-which(is.na(responses))])), length(unique(responses[-which(is.na(responses))])))
+      }
+    } else {
+      if(length(cutoff)!=length(unique(responses))){
+        warning("cutoff set to default.")
+        cutoff = rep(1/length(unique(responses)), length(unique(responses)))
+      }
     }
     cutoff = cutoff
   } else {
-    cutoff = rep(1/length(unique(responses[-which(is.na(responses))])), length(unique(responses[-which(is.na(responses))])))
+    if(sum(is.na(responses))>0){
+      cutoff = rep(1/length(unique(responses[-which(is.na(responses))])), length(unique(responses[-which(is.na(responses))])))
+    } else{
+      cutoff = rep(1/length(unique(responses)), length(unique(responses)))  
+    }
   }
 
   #get features

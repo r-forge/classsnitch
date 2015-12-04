@@ -25,9 +25,9 @@
 #' @examples #input data
 #' data("mutmap")
 #' #build classifier
-#' cr = classifyRNA(classes=2)
+#' cr = classifyRNA()
 #' #get prediction
-#' cr_pred = predict(cr, mutmap[,5:11])
+#' cr_pred = predict(cr, mutmap[,2:8])
 #'
 predict.classifyRNA = function(object, sample=NULL, resp="prob", ...){
   

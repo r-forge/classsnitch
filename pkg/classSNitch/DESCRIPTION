@@ -1,6 +1,6 @@
 Package: classSNitch
 Title: Classifies RNA Structure Change in Chemical Mapping Data
-Version: 0.13.0
+Version: 1.0.0
 Authors@R: person("Chanin", "Tolson", email = "ctolson@email.unc.edu", role = c("aut", "cre"))
 Author: Chanin Tolson [aut, cre]
 Maintainer: Laederach Lab <laederachlab@gmail.com>

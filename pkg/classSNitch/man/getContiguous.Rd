@@ -19,11 +19,9 @@ getContiguous(sample, base=sample[1,], margin=1, tol=0.1)
 A numeric vector of counts
 }
 \description{
-A function to get the number of stretches of contiguous change
+A function to get the number of stretches of contiguous change.
 }
 \details{
-This function to determine the number of stretches of contiguous change between samples
-
 This function calculates the number of stretches of contiguous change between the base vector and each row (or column) in sample.
 }
 \examples{

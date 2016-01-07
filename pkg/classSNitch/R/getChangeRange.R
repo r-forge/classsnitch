@@ -1,6 +1,4 @@
-#' A function to get the range of change position for a trace
-#'
-#' This function finds the range of change position for a trace
+#' A function to get the range of change for a SHAPE trace.
 #' @title getChangeRange
 #' @aliases getChangeRange
 #' @keywords trace range change RNA

@@ -30,11 +30,9 @@ A classifyRNA object, based on randomForest object (see randomForest package)
 }
 }
 \description{
-A function to build a classifier for RNA structure change
+A function to build a random forest classifier for RNA structure change
 }
 \details{
-This function builds a random forest classifier for RNA structure change in SHAPE data
-
 This function builds a random forest classifier for RNA structure change using the randomForest package.
 }
 \note{

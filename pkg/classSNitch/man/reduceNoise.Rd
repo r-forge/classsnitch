@@ -21,11 +21,9 @@ reduceNoise(sample, base=sample[1,], margin=1, trim=0, high=boxplot(sample)$stat
 A noise reduced numeric matrix with the same dimensions as sample.
 }
 \description{
-A function to reduce noise in SHAPE data
+A function to reduce noise in SHAPE data. This function removes peaks that are high in both the base and the comparison SHAPE traces.
 }
 \details{
-This function removes peaks that are high in both the sample and the comparison SHAPE traces.
-
 This function reduces the noise in SHAPE data. For positions where both the base vector and the sample row (or column) is above the high value, the position in the sample row (or column) is set equal to that position in the base vector. The function trims the data by setting the ends of sample equal to the ends of the base vector.
 }
 \examples{

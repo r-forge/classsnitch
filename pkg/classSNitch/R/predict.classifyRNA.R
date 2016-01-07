@@ -1,6 +1,4 @@
-#' A function to classify rna structure change
-#'
-#' This function predicts RNA structure change in SHAPE data
+#' A function to classify rna structure change from an existing classifier.
 #' @title predict.classifyRNA
 #' @aliases predict
 #' @usage

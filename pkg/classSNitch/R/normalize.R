@@ -1,6 +1,4 @@
-#' A Between-Sample Normalization Function
-#'
-#' This function performs between-sample normalization.
+#' A between-sample normalization function for SHAPE traces.
 #' @title normalize
 #' @aliases normalize
 #' @keywords normalize between-sample RNA

@@ -19,11 +19,9 @@ getPatternCC(sample, base=sample[1,], margin=1, tol=0.1)
 A numeric vector of pattern correlation coefficients.
 }
 \description{
-A function to get the correlation coefficient between sample patterns
+A function to get the correlation coefficient between SHAPE trace change patterns.
 }
 \details{
-This function compares the pattern change between samples.
-
 The pattern for a single SHAPE reacitivity trace is the pattern of increase in reactivity or decrease in reactivity between nucleotides. If the change is less than the tolerance value, it is considered a none change. The pattern change value is the Pearson correlation coefficient between the base vector pattern and the pattern of each row (or column) in sample.
 }
 \examples{

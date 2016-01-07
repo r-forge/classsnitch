@@ -1,6 +1,4 @@
-#' A function to get the correlation coefficient between sample magnitudes
-#'
-#' This function compares the magnitude change between samples.
+#' A function to get the correlation coefficient between SHAPE trace magnitudes.
 #' @title getMagCC
 #' @aliases getMagCC
 #' @keywords magnitude correlation-coefficient RNA

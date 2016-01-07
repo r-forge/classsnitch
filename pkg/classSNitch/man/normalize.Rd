@@ -22,11 +22,9 @@ normalize(sample, base=sample[1,], margin=1, outbase=FALSE)
 }
 }
 \description{
-A Between-Sample Normalization Function
+A between-sample normalization function for SHAPE traces.
 }
 \details{
-This function performs between-sample normalization.
-
 This function normalizes the average value of the base vector to 1.5. Each row (or column) in sample is then normalized by minimizing the absolute difference between the base and the sample row (or column).
 }
 \examples{

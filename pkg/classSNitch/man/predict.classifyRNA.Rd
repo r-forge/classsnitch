@@ -25,11 +25,9 @@ A matrix of "response", "vote" or "prob" predictions.
 }
 }
 \description{
-A function to classify rna structure change
+A function to classify rna structure change from an existing classifier.
 }
 \details{
-This function predicts RNA structure change in SHAPE data
-
 This function predicts RNA structure change in SHAPE data using a random forest classifier.
 }
 \examples{

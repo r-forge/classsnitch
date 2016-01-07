@@ -1,6 +1,4 @@
-#' A function to build a classifier for RNA structure change
-#'
-#' This function builds a random forest classifier for RNA structure change in SHAPE data
+#' A function to build a random forest classifier for RNA structure change
 #' @title classifyRNA
 #' @aliases classifyRNA
 #' @keywords classifier RNA structure change random forest

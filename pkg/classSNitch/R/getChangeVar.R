@@ -1,6 +1,4 @@
-#' A function to get the spread or variance of change position for a trace
-#'
-#' This function finds the spread or variance of change position for a trace
+#' A function to get the spread or variance of change for a SHAPE trace.
 #' @title getChangeVar
 #' @aliases getChange Var
 #' @keywords trace variance change RNA

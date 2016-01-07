@@ -1,6 +1,4 @@
-#' A function to get the dynamic time warping between sample magnitudes
-#'
-#' This function compares the timewarp between samples.
+#' A function to get the dynamic time warping between SHAPE trace magnitudes.
 #' @title getTimeWarping
 #' @aliases getTimeWarping
 #' @keywords getTimeWarping change RNA

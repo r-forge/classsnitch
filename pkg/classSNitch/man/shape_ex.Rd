@@ -3,13 +3,13 @@
 \docType{data}
 \name{shape_ex}
 \alias{shape_ex}
-\title{16S rRNA four-way junction wild-type and mutant SHAPE data}
+\title{16S rRNA four-way junction wild-type and mutant SHAPE data from mutate and map experiments in the RMDB.}
 \format{An object of class \code{matrix} with 111 rows and 110 columns.}
 \usage{
 shape_ex
 }
 \description{
-Example SHAPE traces from 16SFWJ_1M7_0001 Mutate and Map experiment in the RNA Mapping Database.
+16S rRNA four-way junction wild-type and mutant SHAPE data from mutate and map experiments in the RMDB.
 }
 \examples{
 data("shape_ex")

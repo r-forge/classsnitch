@@ -17,11 +17,9 @@ getTimeWarping(sample, base=sample[1,], margin=1)
 A numeric vector of time warping values.
 }
 \description{
-A function to get the dynamic time warping between sample magnitudes
+A function to get the dynamic time warping between SHAPE trace magnitudes.
 }
 \details{
-This function compares the timewarp between samples.
-
 This function calculates the dynamic time warping between the base vector and each row (or column) in sample.
 }
 \examples{

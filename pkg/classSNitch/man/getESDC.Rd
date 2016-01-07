@@ -17,11 +17,9 @@ getESDC(sample, base=sample[1,], margin=1)
 A numeric vector of eSDC values.
 }
 \description{
-A function to get experimental structure disruption coefficient (eSDC)
+A function to get experimental structure disruption coefficient (eSDC).
 }
 \details{
-This function to calculate the eSDC between samples.
-
 This function calculates the eSDC between the base vector and each row (or column) in sample.
 }
 \examples{

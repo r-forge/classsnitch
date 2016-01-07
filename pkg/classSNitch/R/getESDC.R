@@ -1,6 +1,4 @@
-#' A function to get experimental structure disruption coefficient (eSDC)
-#'
-#' This function to calculate the eSDC between samples.
+#' A function to get experimental structure disruption coefficient (eSDC).
 #' @title getESDC
 #' @aliases getESDC
 #' @keywords trace eSDC RNA

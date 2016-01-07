@@ -17,11 +17,9 @@ getMagCC(sample, base=sample[1,], margin=1)
 A numeric vector of correlation coefficients.
 }
 \description{
-A function to get the correlation coefficient between sample magnitudes
+A function to get the correlation coefficient between SHAPE trace magnitudes.
 }
 \details{
-This function compares the magnitude change between samples.
-
 This function calculates the Pearson correlation coefficient between the base vector and each row (or column) in sample.
 }
 \examples{

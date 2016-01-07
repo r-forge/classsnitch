@@ -1,6 +1,4 @@
-#' A function to reduce noise in SHAPE data
-#'
-#' This function removes peaks that are high in both the sample and the comparison SHAPE traces.
+#' A function to reduce noise in SHAPE data. This function removes peaks that are high in both the base and the comparison SHAPE traces.
 #' @title reduceNoise
 #' @aliases reduceNoise
 #' @keywords reduce noise trim peak filter SHAPE RNA structure 

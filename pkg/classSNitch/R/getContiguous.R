@@ -1,6 +1,4 @@
-#' A function to get the number of stretches of contiguous change
-#'
-#' This function to determine the number of stretches of contiguous change between samples
+#' A function to get the number of stretches of contiguous change.
 #' @title getContiguous
 #' @aliases getContiguous
 #' @keywords trace getContiguous RNA

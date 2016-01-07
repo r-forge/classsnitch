@@ -5,7 +5,7 @@
 \alias{classify_default}
 \title{classify_default}
 \description{
-A dataset of class labels and change features from SHAPE-traces in the RMDB
+A dataset of class labels and features SHAPE-traces from the mutate and map experiments found in the RMDB
 }
 \note{
 Organization of the data file: header=TRUE, tab-delimited .rda file

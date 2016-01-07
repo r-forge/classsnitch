@@ -1,6 +1,4 @@
 #' A function to get the features for describing RNA structure change. These features can be used in classification of RNA structure change.
-#'
-#' This calculates the features describing change in SHAPE reactivity traces.
 #' @title getFeatures
 #' @aliases getFeatures
 #' @keywords change features RNA structure

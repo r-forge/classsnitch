@@ -38,8 +38,6 @@ getFeatures(sample, base=NULL, margin=1,  norm=T, noise=T, trim=0, high=NULL,
 A function to get the features for describing RNA structure change. These features can be used in classification of RNA structure change.
 }
 \details{
-This calculates the features describing change in SHAPE reactivity traces.
-
 This function calculates the  pattern correlation coefficient, dynamic time warping, contiguousness of change, magnitude correlation coefficient, change of variance, experimental structural disruption coefficient, and change range. These are features used to describe structure change in SHAPE traces.
 }
 \examples{

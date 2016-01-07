@@ -1,6 +1,4 @@
-#' 16S rRNA four-way junction wild-type and mutant SHAPE data
-#'
-#' Example SHAPE traces from 16SFWJ_1M7_0001 Mutate and Map experiment in the RNA Mapping Database.
+#' 16S rRNA four-way junction wild-type and mutant SHAPE data from mutate and map experiments in the RMDB.
 #'
 #' @docType data
 #'

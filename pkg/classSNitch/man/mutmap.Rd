@@ -3,13 +3,13 @@
 \docType{data}
 \name{mutmap}
 \alias{mutmap}
-\title{Consensus classification, magnitude change, and pattern change in example RNAs}
+\title{Consensus classification and features for example RNA SHAPE traces. Features calculated from SHAPE traces from the RNA Mapping Database. Parameters calculated using getFeatures function in classSNitch package. Consensus classification determined using crowd-sourced manual classification.}
 \format{An object of class \code{matrix} with 167 rows and 8 columns.}
 \usage{
 mutmap
 }
 \description{
-Example dataset with the calculated magnitude correlation coefficient, pattern correlation coefficient, average change distance, dynamic time warping, and average trace difference for a set of RNAs. Features calculated from SHAPE traces from the RNA Mapping Database. Parameters calculated using getFeatures function in classSNitch package. Consensus classification determined using crowd-sourced manual classification.
+Consensus classification and features for example RNA SHAPE traces. Features calculated from SHAPE traces from the RNA Mapping Database. Parameters calculated using getFeatures function in classSNitch package. Consensus classification determined using crowd-sourced manual classification.
 }
 \examples{
 data("mutmap")

@@ -1,6 +1,4 @@
-#'A function to get the correlation coefficient between sample patterns
-#'
-#' This function compares the pattern change between samples.
+#'A function to get the correlation coefficient between SHAPE trace change patterns.
 #' @title getPatternCC
 #' @aliases getPatternCC
 #' @keywords pattern correlation-coefficient RNA

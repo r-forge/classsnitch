@@ -1,4 +1,4 @@
-#' A dataset of class labels and change features from SHAPE-traces in the RMDB
+#' A dataset of class labels and features SHAPE-traces from the mutate and map experiments found in the RMDB
 #' @title classify_default
 #' @name classify_default
 #' @aliases classify_default

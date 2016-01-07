@@ -21,11 +21,9 @@ getChangeVar(sample, base=sample[1,], margin=1, tol=0.1)
 A numeric vector of trace change variances.
 }
 \description{
-A function to get the spread or variance of change position for a trace
+A function to get the spread or variance of change for a SHAPE trace.
 }
 \details{
-This function finds the spread or variance of change position for a trace
-
 This function calculates the variance of change positions for each row (or column) in sample.
 }
 \examples{

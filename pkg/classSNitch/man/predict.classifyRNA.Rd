@@ -21,7 +21,7 @@ A matrix of "response", "vote" or "prob" predictions.
 \describe{
  \item{"response"}{ Predicted classes (classes with majority vote)}
  \item{"vote"}{ Vote count fraction (one column for each class and one row for each input)} 
- \item{"class"}{ Class probabilities (one column for each class and one row for each input)}
+ \item{"prob"}{ Class probabilities (one column for each class and one row for each input)}
 }
 }
 \description{

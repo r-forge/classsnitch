@@ -15,7 +15,7 @@
 #' \describe{
 #'  \item{"response"}{ Predicted classes (classes with majority vote)}
 #'  \item{"vote"}{ Vote count fraction (one column for each class and one row for each input)} 
-#'  \item{"class"}{ Class probabilities (one column for each class and one row for each input)}
+#'  \item{"prob"}{ Class probabilities (one column for each class and one row for each input)}
 #' }
 #' @author Chanin Tolson
 #' @references A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R News 2(3), 18--22 (randomForest package)

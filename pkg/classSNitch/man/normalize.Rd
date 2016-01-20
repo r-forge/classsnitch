@@ -4,7 +4,7 @@
 \alias{normalize}
 \title{normalize}
 \usage{
-normalize(sample, base=sample[1,], margin=1, outbase=FALSE)
+normalize(sample, base=sample[1,], margin=1, outbase=FALSE, mean=1.5)
 }
 \arguments{
 \item{sample}{A numeric matrix containing values to be normalized (e.g. a set of mutant SHAPE traces).}
@@ -14,6 +14,8 @@ normalize(sample, base=sample[1,], margin=1, outbase=FALSE)
 \item{margin}{An optional number indicating if sample is organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.}
 
 \item{outbase}{An optional boolean indicating if the normalized base should be returned. Default is FALSE.}
+
+\item{mean}{An optional number setting the mean SHAPE value. Default is 1.5.}
 }
 \value{
 \describe{
@@ -25,7 +27,7 @@ normalize(sample, base=sample[1,], margin=1, outbase=FALSE)
 A between-sample normalization function for SHAPE traces.
 }
 \details{
-This function normalizes the average value of the base vector to 1.5. Each row (or column) in sample is then normalized by minimizing the absolute difference between the base and the sample row (or column).
+This function normalizes the average value of the base vector. Each row (or column) in sample is then normalized by minimizing the absolute difference between the base and the sample row (or column).
 }
 \examples{
 #sample data

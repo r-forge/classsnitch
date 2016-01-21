@@ -4,7 +4,7 @@
 \alias{getFeatures}
 \title{getFeatures}
 \usage{
-getFeatures(sample, base=NULL, margin=1,  norm=T, noise=T, trim=0, high=NULL,
+getFeatures(sample, base=NULL, margin=1,  norm=T, noise=T, mean=1.5, trim=0, high=NULL,
    tol=0.1, outfile=NULL, append=F)
 }
 \arguments{
@@ -17,6 +17,8 @@ getFeatures(sample, base=NULL, margin=1,  norm=T, noise=T, trim=0, high=NULL,
 \item{norm}{An optional boolean to normalize the sample. Default is TRUE.}
 
 \item{noise}{An optional boolean to reduce noise in the sample. Default is TRUE.}
+
+\item{mean}{An optional number setting the mean SHAPE value for normalization. Default is 1.5.}
 
 \item{trim}{An optional number indicating the number of nucleotides to be trimed from the ends. Default is 0.}
 

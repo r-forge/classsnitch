@@ -2,13 +2,14 @@
 #' @title getFeatures
 #' @aliases getFeatures
 #' @keywords change features RNA structure
-#' @usage getFeatures(sample, base=NULL, margin=1,  norm=T, noise=T, trim=0, high=NULL,
+#' @usage getFeatures(sample, base=NULL, margin=1,  norm=T, noise=T, mean=1.5, trim=0, high=NULL,
 #'    tol=0.1, outfile=NULL, append=F)
 #' @param sample A numeric matrix containing values to be compared (e.g. a set of mutant SHAPE traces).
 #' @param base An optional numeric vector containing the values to which the samples are to be compared (e.g. a wild type SHAPE trace). Default is the first trace in each file.
 #' @param margin An optional number indicating if the samples are organized by rows or columns, where 1 indicates rows and 2 indicates columns. Default is 1.
 #' @param norm An optional boolean to normalize the sample. Default is TRUE. 
 #' @param noise An optional boolean to reduce noise in the sample. Default is TRUE. 
+#' @param mean An optional number setting the mean SHAPE value for normalization. Default is 1.5.
 #' @param trim An optional number indicating the number of nucleotides to be trimed from the ends. Default is 0.
 #' @param high An optional number indicating the reactivity above which reactivities are considered high. Default is third quartile of the sample in each file.
 #' @param tol An optional number indicating the tolerance for the change. Default is 0.1.
@@ -28,7 +29,7 @@
 #' #get features
 #' params = getFeatures(shape_ex, trim=5, outfile="out.txt")
 #'
-getFeatures = function(sample, base=NULL, margin=1, norm=T, noise=T, trim=0, high=NULL, tol=0.1, outfile=NULL, append=F){
+getFeatures = function(sample, base=NULL, margin=1, norm=T, noise=T, mean=1.5, trim=0, high=NULL, tol=0.1, outfile=NULL, append=F){
   
   #set sample parameter
   sample = as.matrix(sample)
@@ -63,11 +64,18 @@ getFeatures = function(sample, base=NULL, margin=1, norm=T, noise=T, trim=0, hig
     norm = norm
   }
   
-  #set optional paramater norm
+  #set optional paramater noise
   if(missing(noise)){
     noise = TRUE
   } else {
     noise = noise
+  }
+  
+  #set optional paramater mean
+  if(missing(mean)) {
+    mean = 1.5
+  } else {
+    mean = mean
   }
   
   #set optional paramater trim
@@ -82,7 +90,7 @@ getFeatures = function(sample, base=NULL, margin=1, norm=T, noise=T, trim=0, hig
     }
   }
   
-  #set optional paramater  tol
+  #set optional paramater tol
   if(missing(tol)){
     tol = 0.1
   } else {
@@ -107,7 +115,7 @@ getFeatures = function(sample, base=NULL, margin=1, norm=T, noise=T, trim=0, hig
   #set optional paramater normalize
   if(norm == TRUE){
     #normalize
-    samp_norm = normalize(sample, base)
+    samp_norm = normalize(sample, base, mean=mean)
     base = (1.5*length(base)/sum(base, na.rm=T))*base
     base[base<(-0.5)] = 0  
   } else {

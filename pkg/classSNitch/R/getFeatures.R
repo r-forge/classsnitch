@@ -13,17 +13,17 @@
 #' @param trim An optional number indicating the number of nucleotides to be trimed from the ends. Default is 0.
 #' @param high An optional number indicating the reactivity above which reactivities are considered high. Default is third quartile of the sample in each file.
 #' @param tol An optional number indicating the tolerance for the change. Default is 0.1.
-#' @param outfile An optional string indicating the name of the output file. The output file will consist of two columns (magnitude change and pattern change). Default will not output a file.
+#' @param outfile An optional string indicating the name of the output file. The output file will consist of feature columns. Default will not output a file.
 #' @param append An optional boolean to append the file if an outfile is given. Default is FALSE. 
 #' @export
-#' @details This function calculates the  pattern correlation coefficient, dynamic time warping, contiguousness of change, magnitude correlation coefficient, change of variance, experimental structural disruption coefficient, and change range. These are features used to describe structure change in SHAPE traces. 
+#' @details This function calculates the  pattern correlation coefficient, dynamic time warping, contiguousness of change, magnitude correlation coefficient, change of variance, experimental structural disruption coefficient, change range and L2 norm. These are features used to describe structure change in SHAPE traces. 
 #' @return 
 #' \describe{
-#'  \item{"outmat"}{A seven column numeric matrix for pattern correlation coefficient, dynamic time warping, contiguousness of change, magnitude correlation coefficient, change of variance, experimental structural disruption coefficient, and change range} 
+#'  \item{"outmat"}{A seven column numeric matrix for pattern correlation coefficient, dynamic time warping, contiguousness of change, magnitude correlation coefficient, change of variance, experimental structural disruption coefficient, change range, and L2 norm} 
 #'  \item{"outfile"}{An optional output file for the matrix.}
 #' }
 #' @author Chanin Tolson
-#' @seealso  \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{getPatternCC}} \code{\link{getTimeWarping}} \code{\link{getContiguous}} \code{\link{getMagCC}} \code{\link{getESDC}} \code{\link{getChangeRange}}
+#' @seealso  \code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{getPatternCC}} \code{\link{getTimeWarping}} \code{\link{getContiguous}} \code{\link{getMagCC}} \code{\link{getESDC}} \code{\link{getChangeRange}} \code{\link{getL2norm}}
 #' @examples #input files
 #' data("shape_ex")
 #' #get features
@@ -161,10 +161,13 @@ getFeatures = function(sample, base=NULL, margin=1, norm=T, noise=T, mean=1.5, t
   #change range
   range = getChangeRange(samp_qual, base=base, tol=tol)
   
+  #L2 norm
+  l2norm = getL2norm(samp_qual, base)
+  
   #combine features
-  features = cbind(pat, tw, contig, mag, var, eSDC, range)
+  features = cbind(pat, tw, contig, mag, var, eSDC, range, l2norm)
   rownames(features) = rownames(sample)
-  colnames(features) = c("pattern change", "time warping", "change contiguousness", "magnitude change", "change variance", "eSDC", "range")
+  colnames(features) = c("pattern change", "time warping", "change contiguousness", "magnitude change", "change variance", "eSDC", "range", "L2 Norm")
   
   #write parameter outfile
   if(missing(outfile)){

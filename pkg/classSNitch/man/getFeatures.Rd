@@ -26,13 +26,13 @@ getFeatures(sample, base=NULL, margin=1,  norm=T, noise=T, mean=1.5, trim=0, hig
 
 \item{tol}{An optional number indicating the tolerance for the change. Default is 0.1.}
 
-\item{outfile}{An optional string indicating the name of the output file. The output file will consist of two columns (magnitude change and pattern change). Default will not output a file.}
+\item{outfile}{An optional string indicating the name of the output file. The output file will consist of feature columns. Default will not output a file.}
 
 \item{append}{An optional boolean to append the file if an outfile is given. Default is FALSE.}
 }
 \value{
 \describe{
- \item{"outmat"}{A seven column numeric matrix for pattern correlation coefficient, dynamic time warping, contiguousness of change, magnitude correlation coefficient, change of variance, experimental structural disruption coefficient, and change range} 
+ \item{"outmat"}{A seven column numeric matrix for pattern correlation coefficient, dynamic time warping, contiguousness of change, magnitude correlation coefficient, change of variance, experimental structural disruption coefficient, change range, and L2 norm} 
  \item{"outfile"}{An optional output file for the matrix.}
 }
 }
@@ -40,7 +40,7 @@ getFeatures(sample, base=NULL, margin=1,  norm=T, noise=T, mean=1.5, trim=0, hig
 A function to get the features for describing RNA structure change. These features can be used in classification of RNA structure change.
 }
 \details{
-This function calculates the  pattern correlation coefficient, dynamic time warping, contiguousness of change, magnitude correlation coefficient, change of variance, experimental structural disruption coefficient, and change range. These are features used to describe structure change in SHAPE traces.
+This function calculates the  pattern correlation coefficient, dynamic time warping, contiguousness of change, magnitude correlation coefficient, change of variance, experimental structural disruption coefficient, change range and L2 norm. These are features used to describe structure change in SHAPE traces.
 }
 \examples{
 #input files
@@ -53,7 +53,7 @@ params = getFeatures(shape_ex, trim=5, outfile="out.txt")
 Chanin Tolson
 }
 \seealso{
-\code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{getPatternCC}} \code{\link{getTimeWarping}} \code{\link{getContiguous}} \code{\link{getMagCC}} \code{\link{getESDC}} \code{\link{getChangeRange}}
+\code{\link{normalize}} \code{\link{reduceNoise}} \code{\link{getPatternCC}} \code{\link{getTimeWarping}} \code{\link{getContiguous}} \code{\link{getMagCC}} \code{\link{getESDC}} \code{\link{getChangeRange}} \code{\link{getL2norm}}
 }
 \keyword{RNA}
 \keyword{change}

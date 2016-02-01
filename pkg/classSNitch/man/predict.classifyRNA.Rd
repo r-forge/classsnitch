@@ -10,7 +10,7 @@
 \arguments{
 \item{object}{An object of classifyRNA (see classifyRNA function).}
 
-\item{sample}{An optional matrix of predictors for magnitude correlation coefficient, pattern  correlation coefficient, change distance, time warping and trace difference (e.g. output from getFeatures())}
+\item{sample}{An optional matrix of predictors (e.g. output from getFeatures())}
 
 \item{resp}{An optional string to determine type of return value. Default is "prob".}
 
@@ -36,7 +36,7 @@ data("mutmap")
 #build classifier
 cr = classifyRNA()
 #get prediction
-cr_pred = predict(cr, mutmap[,2:8])
+cr_pred = predict(cr, mutmap[,2:9])
 
 }
 \author{

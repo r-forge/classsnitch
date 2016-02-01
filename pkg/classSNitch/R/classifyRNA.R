@@ -34,6 +34,7 @@
 #'  \item{"column 6"}{ change variance} 
 #'  \item{"column 7"}{ eSDC} 
 #'  \item{"column 8"}{ change range} 
+#'  \item{"column 9"}{ L2 norm} 
 #' }
 #' The default data has been gathered from the RNA Mapping Database mutate and map experiments.
 #' @author Chanin Tolson
@@ -52,14 +53,14 @@ classifyRNA = function(data=NULL, cutoff=NULL){
   if(missing(data)){
     data = classSNitch::classify_default
     responses = data[,1]
-    input = data[,2:8]
+    input = data[,2:9]
   } else {
     data = data
-    if(ncol(data) != 8){
+    if(ncol(data) != 9){
       stop("Incorrect data file format.")
     }
     responses = data[,1]
-    input = data[,2:8]
+    input = data[,2:9]
   }
   
   #set optional paramater cutoff
@@ -87,7 +88,7 @@ classifyRNA = function(data=NULL, cutoff=NULL){
   #get features
   input = as.data.frame(cbind(responses, input))
   rownames(input) = rownames(data)
-  colnames(input) = c("class", "pat", "tw", "contig", "mag", "var", "eSDC", "range") 
+  colnames(input) = c("class", "pat", "tw", "contig", "mag", "var", "eSDC", "range", "l2norm") 
   if(sum(is.na(input[,1]), na.rm=T)>0){
     input = input[-which(is.na(input[,1]),arr.ind=T),]
   }

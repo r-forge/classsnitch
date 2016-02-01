@@ -4,7 +4,7 @@
 \name{mutmap}
 \alias{mutmap}
 \title{Consensus classification and features for example RNA SHAPE traces. Features calculated from SHAPE traces from the RNA Mapping Database. Parameters calculated using getFeatures function in classSNitch package. Consensus classification determined using crowd-sourced manual classification.}
-\format{An object of class \code{matrix} with 167 rows and 8 columns.}
+\format{An object of class \code{matrix} with 167 rows and 9 columns.}
 \usage{
 mutmap
 }

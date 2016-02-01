@@ -18,6 +18,7 @@ Organization of the data file: header=TRUE, tab-delimited .rda file
  \item{"column 6"}{ change variance} 
  \item{"column 7"}{ eSDC} 
  \item{"column 8"}{ change range} 
+ \item{"column 9"}{ L2 norm} 
 }
 }
 \references{

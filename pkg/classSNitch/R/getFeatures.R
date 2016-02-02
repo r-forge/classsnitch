@@ -167,7 +167,7 @@ getFeatures = function(sample, base=NULL, margin=1, norm=T, noise=T, mean=1.5, t
   #combine features
   features = cbind(pat, tw, contig, mag, var, eSDC, range, l2norm)
   rownames(features) = rownames(sample)
-  colnames(features) = c("pattern change", "time warping", "change contiguousness", "magnitude change", "change variance", "eSDC", "range", "L2 Norm")
+  colnames(features) = c("pattern change", "time warping", "change contiguousness", "magnitude change", "change variance", "eSDC", "range", "l2 norm")
   
   #write parameter outfile
   if(missing(outfile)){

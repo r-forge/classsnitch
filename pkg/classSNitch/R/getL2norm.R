@@ -43,11 +43,11 @@ getL2norm = function(sample, base=sample[1,], margin=1){
   
   #calculate L2 norm
   norm = function(sample, base){
-    l2 = sqrt(sum(sample-base)^2)
+    l2 = sqrt(sum(((as.numeric(sample)-as.numeric(base))^2), na.rm=TRUE))
     return(l2)
   } 
   l2norm = apply(sample, 1, norm, base=base)
   
-  #return l2norm
+  #return L2 norm
   return(l2norm)
 }

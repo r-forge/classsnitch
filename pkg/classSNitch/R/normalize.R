@@ -91,6 +91,7 @@ normalize = function(sample, base=sample[1,], margin=1, outbase=FALSE, mean=1.5)
     samp_norm = t(samp_norm)
   }
   samp_norm = matrix(unlist(samp_norm), nrow=nrow(samp_norm))
+  samp_norm[samp_norm<(-0.5)] = NA
   
   if(outbase==TRUE){
     samp_out = NULL
@@ -99,7 +100,6 @@ normalize = function(sample, base=sample[1,], margin=1, outbase=FALSE, mean=1.5)
     samp_norm = samp_out
     names(samp_norm) = c("sample.normalized", "base.normalized")
   }
-  samp_norm[samp_norm<(-0.5)] = NA
   
   #return normalized sample
   return(samp_norm)

@@ -68,8 +68,8 @@ Chanin Tolson and Alain Laederach
 </figure></td>
 <td  width="75%">
 <br>
-Package source (use this for Linux / Solaris): <a href="docs/classSNitch_0.13.0.tar.gz" download>classSNitch_0.13.0.tar.gz</a><br>
-Windows binary: <a href="docs/classSNitch_0.13.0.zip" download>classSNitch_0.13.0.zip</a><br>
+Package source (use this for Linux / Solaris): <a href="docs/classSNitch_1.0.0.tar.gz" download>classSNitch_1.0.0.tar.gz</a><br>
+Windows binary: <a href="docs/classSNitch_0.13.0.zip" download>classSNitch_1.0.0.zip</a><br>
 Repository: classSNitch is also available on <a href="http://r-forge.r-project.org/projects/classsnitch/">R-Forge</a>
 </td>
 </tr>

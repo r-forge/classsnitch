@@ -41,12 +41,12 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <!—  RiboSNitch Image —>
 <table><tr>
-<td><figure>
-<img id="im1" src="images/riboSNitches.png" width="390" height="417" alt="RiboSNitches"/>
-</figure></td>
+<td><figure></figure></td>
 <td>
+<center><img id="im1" src="images/riboSNitches.png" height=200 alt="RiboSNitches"/></center>
+<br><br>
 <h3 align="center">About</h3>
-<p  align="justify">Mutations in RNA will create a riboSNitch, if important structural elements are disrupted. Recent ultra-high throughput techniques, such as SHAPE-MaP and PARS, enable the collection of structural RNA information on a genome-wide scale. With the ability to gather genome-wide structural information on RNA, it is important to accurately classify these structural data in order to identify those structural changes that result in a phenotypic outcome. We have developed an automated approach to classify structure change in SHAPE data. This method utilizes random forest classification on a set of pattern and magnitude parameters from the mutate and map SHAPE data set (or another user specified data set) to build a classifier. The classifier is then used to identify structure change in other SHAPE traces. Enabling scientists to identify structure change may help guide experiments that examine RNA structure and its role in biological processes.</p>
+<p  align="center">Mutations (or Single Nucleotide Variants) in folded RiboNucleic Acid structures that cause local or global conformational change are riboSNitches. Predicting riboSNitches is challenging as it requires making two, albeit related, structure predictions. The data most often used to experimentally validate riboSNitch predictions is Selective 2&rsquo; Hydroxyl Acylation by Primer Extension, or SHAPE. Experimentally establishing a riboSNitch requires the quantitative comparison of two SHAPE traces: wild-type (WT) and mutant. Historically, SHAPE data was collected on electropherograms and change in structure was evaluated by &ldquo;gel gazing.&rdquo; SHAPE data is now routinely collected with next generation sequencing and/or capillary sequencers. We have established a classifier capable of simulating human &ldquo;gazing&rdquo; by identifying features of the SHAPE profile that human experts agree &ldquo;looks&rdquo; like a riboSNitch. </p>
 </td>
 </tr></table>
 <hr>
@@ -112,7 +112,7 @@ sample = getChangeParams(sample_shape[2:nrow(sample_shape),], base=sample_shape[
 <br>
 #predict change<br>
 cr = classifyRNA(classes=2)<br>
-cr_pred = predict(cr, sample, type="response")
+cr_pred = predict(cr, sample, resp="response")
 </td>
 </tr>
 <tr valign="top">
